@@ -1,33 +1,33 @@
-.full_screen_box{
+.full_screen_box_2{
     display: flex;
     flex-direction: row;
+    justify-content: right;
     height: 100vh;
     width: 100vw;
     background: #1D3557;
-    justify-content: right;
 }
 
-.login_area{
+.login_area_2{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
     width: 450px;
     background: #F5F5F5;
-    padding-top: 160px;
 }
 
-.username{
+.username_2{
+    margin-top: 158px;
     width: 300px;
     height: 90px;
 }
 
-.password{
+.password_2{
     width: 300px;
     height: 90px;
 }
 
-.username_writting{
+.username_writting_2{
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -37,7 +37,7 @@
     color: #1D3557;
 }
 
-.username_input{
+.username_input_2{
     width:290px;
     height:35px;
     margin-top: 7px;
@@ -46,7 +46,7 @@
     border-radius: 11px;
     border-style: none;
 }
-.password_writting{
+.password_writting_2{
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -55,7 +55,7 @@
     margin-left: 15px;
     color: #1D3557;
 }
-.password_input{
+.password_input_2{
     width:290px;
     height:35px;
     margin-top: 7px;
@@ -65,13 +65,13 @@
     border-style: none;
 }
 
-.button_area{
+.button_area_2{
     display: flex;
     width: 300px;
     height: 90px;
     justify-content: center;
 }
-.sign_up_button{
+.sign_up_button_2{
     background-color: #d7d6d6;
     border-style: none;
     width:200px;
