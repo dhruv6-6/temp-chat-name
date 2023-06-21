@@ -6,8 +6,8 @@ import Login from "./windows/login/Login";
 import Chat from "./windows/chat/Chat";
 
 function App() {
-  const [signup , Setsignup] = useState(1);
-  const [chat , Setchat] = useState(0);
+  const [signup , Setsignup] = useState(0);
+  const [chat , Setchat] = useState(1);
   return (
     <div>
       {

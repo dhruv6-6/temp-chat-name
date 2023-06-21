@@ -8,8 +8,13 @@
 .sidebar{
     height: 100%;
     width:50px;
-    background: #F5F5F5;
+    background-color: #F5F5F5;
 }
+.user_image{
+    width: 50px;
+    height: 50px;
+}
+
 .user_names_area{
     display:flex;
     flex-direction: column;
@@ -71,11 +76,94 @@
     width: 100%;
 }
 
+
+.sidebar_button{
+    background-color: transparent;
+    border-style: none;
+    height:50px;
+    width:50px;
+    border-radius:20px;
+    margin-top: 5px;
+}
+
+.sidebar_image{
+    height:30px;
+}
+
+.user_button{
+    margin-top: 55px;
+}
+
+.logout_button{
+    margin-top: 220px;
+}
+
+.userinfo_image{
+    margin-top: 5px;
+    height: 35px;
+    margin-left:8px;
+}
+
+.call_button{
+    margin-top: 10px;
+    background-color: transparent;
+    border-style: none;
+}
+
+.videocall_button{
+    margin-top: 10px;
+    background-color: transparent;
+    margin-left: 600px;
+    border-style: none;
+}
+
 .chats{
+    display: flex;
+    flex-direction: column;
     flex:1;
     margin-bottom: 17px;
     margin-right: 14px;
     border-radius: 14px;
     width: 98%;
     background: #F5F5F5;
+}
+
+.messages{
+    flex:1;
+}
+
+.send_area{
+    display:flex;
+    flex-direction: row;
+    height: 55px;
+    justify-content: center;
+}
+
+.message_input{
+    border-bottom-left-radius: 11px;
+    border-top-left-radius: 11px;
+    border-style: none;
+    height:28px;
+    width:540px;
+    background: #A8DADC;
+}
+.message_input::placeholder{
+
+    font-family: 'Libre Baskerville';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+
+    color: #1D3557;
+    padding-left:15px;
+}
+
+.send_button{
+    height:30px;
+    width:80px;
+    border-style: none;
+    background: #1D3557;
+    color: #F5F5F5;
+    border-bottom-right-radius: 11px;
+    border-top-right-radius: 11px;
 }
