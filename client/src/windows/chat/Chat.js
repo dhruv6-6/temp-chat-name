@@ -1,4 +1,4 @@
-import {React , useState} from "react";
+import {React , useEffect, useState} from "react";
 import './Chat.css';
 
 import Letters from './letters/Letters'
@@ -13,11 +13,18 @@ import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
 
 
-const Chat = ()=>{
+const Chat = (props)=>{
+    var {socket , curUserData , setChat , setSignup} = props;
+
     const [normal_search_area , Set_normal_search_area] = useState(1);
     const [add_user_popup , Set_add_user_popup] = useState(0);
     const [make_group_window , Set_make_group_window] = useState(0);
     const [add_user_window , Set_add_user_window] = useState(0);
+    const [chat_history , Set_chat_history] = useState([{time:Date() , sender:1 , message:""}]);
+
+    useEffect(()=>{
+        socket.emit("load_chat" , curUserData)
+    } , [socket])
 
     const UserInfoAddUser = (name)=> {
         const index = name.name.codePointAt(0) -65;
@@ -140,7 +147,9 @@ const Chat = ()=>{
                     </button>
                 </div>
                 <div className="chats">
-                    <div className="messages"></div>
+                    <div className="messages">
+
+                    </div>
                     <div className="send_area">
                         <input className="message_input" placeholder="Type message"></input>
                         <button className="send_button">Send</button>
