@@ -77,7 +77,23 @@ const Chat = ()=>{
                     </div>
                 }  
                 <div className="user_names">
-                    
+                    {normal_search_area
+                    ?
+                        <div>
+                            <p>normal_search_area</p>
+                        </div>
+                    :
+                        make_group_window
+                        ?   
+                            <div>
+                                <p>make_group_window</p>
+                            </div>
+                        :
+                            <div>
+                                <p>add_user_window</p>
+                            </div>
+                    }
+
                     {add_user_popup  
                     ?
                         <div className="add_user_popup_css">
