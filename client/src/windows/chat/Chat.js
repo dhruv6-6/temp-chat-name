@@ -12,6 +12,7 @@ import user from './images/users.png'
 import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
 import Plus from "./images/Plus.png"
+import chat from "./images/chats.png"
 import Messages from './components/messages/Messages';
 
 
@@ -20,15 +21,17 @@ const Chat = (props)=>{
 
     const [normalSearchArea , SetnormalSearchArea] = useState(1);
     const [addUserPopup , SetaddUserPopup] = useState(0);
+    const [userRequestPopup , SetuserRequestPopup] = useState(0);
     const [makeGroupWindow , SetmakeGroupWindow] = useState(0);
     const [addUserWindow , SetaddUserWindow] = useState(0);
+    const [pendingRequestWindow , SetpendingRequestWindow] = useState(0);
     const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
 
     useEffect(()=>{
         socket.emit("loadChat" , curUserData)
     } , [socket])
 
-    const UserInfoAddUser = (name)=> {
+    const UserInfo = (name)=> {
         const index = name.name.codePointAt(0) -65;
 
         return(
@@ -41,9 +44,11 @@ const Chat = (props)=>{
                     </div>
                 </div>
                 <p className="userLogName">{name.name}</p>
+
                 <div className="plusCircle">
                     <img src={Plus} className="plusIcon"></img>
                 </div>
+
             </div>
         )
 
@@ -64,6 +69,15 @@ const Chat = (props)=>{
             SetaddUserPopup(1^addUserPopup);
         }
     }
+    const userRequestPopupWindow = () =>{
+        if(makeGroupWindow || addUserWindow){
+            changeToMainChatWindow();
+            SetuserRequestPopup(1^userRequestPopup);
+        }
+        else{
+            SetuserRequestPopup(1^userRequestPopup);
+        }
+    }
     const changeToAddUserWindow = () =>{
         SetnormalSearchArea(0);
         SetaddUserPopup(0);
@@ -74,14 +88,23 @@ const Chat = (props)=>{
         SetaddUserPopup(0);
         SetmakeGroupWindow(1);
     }
+    const changeToPendingRequestWindow = ()=>{
+
+    }
+    const changeToFriendRequestWindow = ()=>{
+
+    }
 
     return(
         <div className="mainBody">
             <div className="sidebar">
                 <button className="sidebarButton userButton">
-                    <img src = {user} className="sidebarImage"></img>
+                    <img src = {chat} className="sidebarImage"></img>
                 </button>
                 <button className="sidebarButton">
+                    <img src = {user} className="sidebarImage"></img>
+                </button>
+                <button className="sidebarButton" onClick={()=>{userRequestPopupWindow()}}>
                     <img src = {adduser} className="sidebarImage"></img>
                 </button>
                 <button className="sidebarButton">
@@ -90,6 +113,7 @@ const Chat = (props)=>{
                 <button className="sidebarButton" onClick={() => {userAddPopupWindow()}}>
                     <img src= {creategroup} className="sidebarImage"></img>
                 </button>
+                <div className="middleGap"></div>
                 <button className="sidebarButton logoutButton">
                     <img src= {logout} className="sidebarImage"></img>
                 </button>
@@ -125,13 +149,21 @@ const Chat = (props)=>{
                             </div>
                         :
                             <div>
-                                <UserInfoAddUser name="Armaan" />
+                                <UserInfo name="Armaan" />
                             </div>
                     }
-
+                    {userRequestPopup  
+                    ?
+                        <div className="PopupCss">
+                            <button onClick={() => {changeToPendingRequestWindow()}} className="createGroupButton">Pending Requests</button>
+                            <button onClick={() => {changeToFriendRequestWindow()}} className="addUserButton">Friend Requests</button>
+                        </div>
+                    :
+                        <></>
+                    }
                     {addUserPopup  
                     ?
-                        <div className="addUserPopupCss">
+                        <div className="PopupCss">
                             <button onClick={() => {changeToCreateGroupWindow()}} className="createGroupButton">Create Group</button>
                             <button onClick={() => {changeToAddUserWindow()}} className="addUserButton">Add User</button>
                         </div>
