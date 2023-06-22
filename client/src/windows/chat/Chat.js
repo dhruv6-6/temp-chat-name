@@ -77,6 +77,7 @@ const Chat = ()=>{
                     </div>
                 }  
                 <div className="user_names">
+                    
                     {add_user_popup  
                     ?
                         <div className="add_user_popup_css">
