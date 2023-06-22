@@ -20,7 +20,7 @@ const Chat = (props)=>{
     const [add_user_popup , Set_add_user_popup] = useState(0);
     const [make_group_window , Set_make_group_window] = useState(0);
     const [add_user_window , Set_add_user_window] = useState(0);
-    const [chat_history , Set_chat_history] = useState([{time:Date() , sender:1 , message:""}]);
+    const [chat_history , Set_chat_history] = useState([]);
 
     useEffect(()=>{
         socket.emit("load_chat" , curUserData)
