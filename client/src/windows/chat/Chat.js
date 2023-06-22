@@ -12,6 +12,7 @@ import user from './images/users.png'
 import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
 
+
 const Chat = ()=>{
     const [normal_search_area , Set_normal_search_area] = useState(1);
     const [add_user_popup , Set_add_user_popup] = useState(0);
@@ -35,7 +36,7 @@ const Chat = ()=>{
                 </div>
             </div>
         )
-        
+
     }
 
     const change_to_main_chat_window = () =>{
