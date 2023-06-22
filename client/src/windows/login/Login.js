@@ -21,6 +21,9 @@ const Login = ()=>{
                     <p className='password_writting'>Password</p>
                     <input className='password_input'></input>
                 </div>
+                <div className='button_area'>
+                    <button className='sign_up_button'>Log in</button>
+                </div>
             </div>
         </div>
     )
