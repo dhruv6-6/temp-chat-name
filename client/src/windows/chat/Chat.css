@@ -1,4 +1,4 @@
-.main_body{
+.mainBody{
     display: flex;
     flex-direction: row;
     height: 100vh;
@@ -10,19 +10,19 @@
     width:50px;
     background-color: #F5F5F5;
 }
-.user_image{
+.userImage{
     width: 50px;
     height: 50px;
 }
 
-.user_names_area{
+.userNamesArea{
     display:flex;
     flex-direction: column;
     height: 100%;
     width:330px;
 }
 
-.search_box_1{
+.searchBox1{
     width: 89%;
     height: 30px;
     margin-right:1px;
@@ -34,7 +34,7 @@
     border-radius: 14px;
     border-style: none;
 }
-.search_box_1::placeholder{
+.searchBox1::placeholder{
     font-family: 'Libre Baskerville';
     font-style: normal;
     font-weight: 400;
@@ -44,7 +44,7 @@
     color: #1D3557;
 }
 
-.user_names{
+.userNames{
     width: 89%;
     flex:1;
     border-radius: 14px;
@@ -53,20 +53,20 @@
     background: #F5F5F5;
 }
 
-.chat_area{
+.chatArea{
     display: flex;
     flex-direction: column;
     height: 100%;
     flex:1;
 }
 
-.chatter_info{
+.chatterInfo{
     height: 68px;
     width: 100%;
 }
 
 
-.sidebar_button{
+.sidebarButton{
     background-color: transparent;
     border-style: none;
     height:50px;
@@ -75,31 +75,31 @@
     margin-top: 5px;
 }
 
-.sidebar_image{
+.sidebarImage{
     height:30px;
 }
 
-.user_button{
+.userButton{
     margin-top: 55px;
 }
 
-.logout_button{
+.logoutButton{
     margin-top: 220px;
 }
 
-.userinfo_image{
+.userinfoImage{
     margin-top: 5px;
     height: 35px;
     margin-left:8px;
 }
 
-.call_button{
+.callButton{
     margin-top: 10px;
     background-color: transparent;
     border-style: none;
 }
 
-.videocall_button{
+.videocallButton{
     margin-top: 10px;
     background-color: transparent;
     margin-left: 600px;
@@ -121,14 +121,14 @@
     flex:1;
 }
 
-.send_area{
+.sendArea{
     display:flex;
     flex-direction: row;
     height: 55px;
     justify-content: center;
 }
 
-.message_input{
+.messageInput{
     border-bottom-left-radius: 11px;
     border-top-left-radius: 11px;
     border-style: none;
@@ -136,7 +136,7 @@
     width:540px;
     background: #A8DADC;
 }
-.message_input::placeholder{
+.messageInput::placeholder{
 
     font-family: 'Libre Baskerville';
     font-style: normal;
@@ -147,7 +147,7 @@
     padding-left:15px;
 }
 
-.send_button{
+.sendButton{
     height:30px;
     width:80px;
     border-style: none;
@@ -156,7 +156,7 @@
     border-bottom-right-radius: 11px;
     border-top-right-radius: 11px;
 }
-.add_user_popup_css{
+.addUserPopupCss{
     margin-top: 140px;
     display: flex;
     flex-direction: column;
@@ -166,7 +166,7 @@
     height:100px;
     align-items: center;
 }
-.create_group_button{
+.createGroupButton{
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 11px;
@@ -175,7 +175,7 @@
     border-style: none;
     background-color: #D9D9D9;
 }
-.add_user_button{
+.addUserButton{
     flex:1;
     border-radius: 11px;
     width:95%;
@@ -184,11 +184,11 @@
     background-color: #D9D9D9;
 }
 
-.add_user_search_area{
+.addUserSearchArea{
     display: flex;
     flex-direction: row;
 }
-.back_button{
+.backButton{
     width:30px;
     height:30px;
     margin-top: 17px;
@@ -196,12 +196,12 @@
     background-color: transparent;
     border-style: none;
 }
-.back_button_image{
+.backButtonImage{
     width:30px;
     height:30px;
 }
 
-.search_box_2{
+.searchBox2{
     width: 73%;
     height: 30px;
     margin-right:1px;
@@ -213,7 +213,7 @@
     border-radius: 14px;
     border-style: none;
 }
-.search_box_2::placeholder{
+.searchBox2::placeholder{
     font-family: 'Libre Baskerville';
     font-style: normal;
     font-weight: 400;
@@ -223,7 +223,7 @@
     color: #1D3557;
 }
 
-.make_group_box{
+.makeGroupBox{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -231,7 +231,7 @@
     height:100%;
     border-radius: 11px;
 }
-.enter_group_name{
+.enterGroupName{
     margin-top: 13px;
     margin-bottom: 10px;
     border-radius: 11px;
@@ -240,7 +240,7 @@
     border-style: none;
     background-color: #D9D9D9;
 }
-.enter_group_name::placeholder{
+.enterGroupName::placeholder{
     font-family: 'Libre Baskerville';
     font-style: normal;
     font-weight: 400;
@@ -249,10 +249,10 @@
 
     color: #1D3557;
 }
-.users_to_add{
+.usersToAdd{
     flex:1;
 }
-.main_create_group_button{
+.mainCreateGroupButton{
     margin-top: 13px;
     margin-bottom: 15px;
     border-radius: 11px;
@@ -269,7 +269,7 @@
     color: #1D3557;
 }
 
-.user_icon{
+.userIcon{
     margin-left: 10px;
     margin-top: 10px;
     display: flex;
@@ -278,7 +278,7 @@
     height:45px;
     width:45px;
 }
-.user_name_image_circle{
+.userNameImageCircle{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -287,7 +287,7 @@
     border-radius: 27px;
     background-color: rgb(78, 78, 78);
 }
-.white_circle{
+.whiteCircle{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -296,11 +296,11 @@
     border-radius: 25px;
     background-color: #eaeaea;
 }
-.user_icon_letter{
+.userIconLetter{
     height: 65%;
     width: 65%;
 }
-.user_info{
+.userInfo{
     display: flex;
     flex-direction: row;
 }
