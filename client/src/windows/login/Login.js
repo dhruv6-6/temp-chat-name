@@ -9,8 +9,8 @@ const Login = ()=>{
                 <div className='welcome'>
                     <p className="welcome_message">Welcome Back</p>
                     <div className="bottom_welcome_message">
-                        <p className="new_here">New here?</p>
-                        <p className='create_account'>Create an account</p>
+                        <button className="new_here">New here?</button>
+                        <button className='create_account'>Create an account</button>
                     </div>
                 </div>
                 <div className='username'>
