@@ -31,15 +31,23 @@ app.get("/", (req, res) => {
 let thisU;
 io.on("connection", function (socket) {
     console.log(socket.id  + " connected!");
-    socket.on("sign-up-init" , data=>{
-        
-        addUserData({
-            data
+    socket.on("sign-up-init" , async data=>{
+        let f =1;
+        await getUserData({username:data.username}).then( res=>{
+            if(res.length!=0){
+                f = 0;
+                socket.emit("username-exist" , data);
+            }
         })
-    })
-    socket.on("changed" ,data=>{
-        
-        console.log("CHANGED\n",data);
+        if (f===1){
+            
+            var expData = data;
+            expData["rooms"] = {};
+            expData["duos"] = {};
+            await addUserData(expData);
+            console.log("daal diya\n");
+            socket.emit("sign-up-complete" ,data);
+        }
     })
     socket.on("disconnect", function () {
         console.log("exiting:" , socket.id);
