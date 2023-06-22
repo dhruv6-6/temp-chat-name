@@ -1,6 +1,7 @@
 import {React , useState} from "react";
 import './Chat.css';
 
+import Letters from './letters/Letters'
 import adduser from './images/adduser.png'
 import call from './images/call.png'
 import videocall from './images/videocall.png'
@@ -17,6 +18,25 @@ const Chat = ()=>{
     const [make_group_window , Set_make_group_window] = useState(0);
     const [add_user_window , Set_add_user_window] = useState(0);
 
+    const UserInfoAddUser = (name)=> {
+        const index = name.name.codePointAt(0) -65;
+
+        return(
+            <div>
+                <div className="user_info">
+                    <div className="user_icon">
+                        <div className="user_name_image_circle">
+                            <div className="white_circle">
+                                <img src = {Letters[index]} className="user_icon_letter"></img>  
+                            </div>
+                        </div>
+                    </div>
+                    <p>{name.name}</p>
+                </div>
+            </div>
+        )
+    }
+
     const change_to_main_chat_window = () =>{
         Set_normal_search_area(1)
         Set_add_user_popup(0);
@@ -26,6 +46,7 @@ const Chat = ()=>{
     const user_add_popup_window = () =>{
         if(make_group_window || add_user_window){
             change_to_main_chat_window();
+            Set_add_user_popup(1^add_user_popup);
         }
         else{
             Set_add_user_popup(1^add_user_popup);
@@ -85,14 +106,14 @@ const Chat = ()=>{
                     :
                         make_group_window
                         ?   
-                            <div class = "make_group_box">
+                            <div className = "make_group_box">
                                 <input className="enter_group_name" placeholder="Enter Group Name"></input>
                                 <div className="users_to_add"></div>
                                 <button className="main_create_group_button">Create Group</button>
                             </div>
                         :
                             <div>
-                                <p>add_user_window</p>
+                                <UserInfoAddUser name="Dhruv" />
                             </div>
                     }
 

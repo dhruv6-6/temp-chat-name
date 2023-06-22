@@ -268,3 +268,39 @@
     
     color: #1D3557;
 }
+
+.user_icon{
+    margin-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:45px;
+    width:45px;
+}
+.user_name_image_circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 27px;
+    background-color: rgb(78, 78, 78);
+}
+.white_circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95%;
+    width: 95%;
+    border-radius: 25px;
+    background-color: #eaeaea;
+}
+.user_icon_letter{
+    height: 65%;
+    width: 65%;
+}
+.user_info{
+    display: flex;
+    flex-direction: row;
+}
