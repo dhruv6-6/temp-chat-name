@@ -13,8 +13,8 @@ var socket = io.connect("http://localhost:3001", {
 
 
 function App() {
-  const [signup , Setsignup] = useState(1);
-  const [chat , Setchat] = useState(0);
+  const [signup , setSignup] = useState(0);
+  const [chat , setChat] = useState(0);
   const [username,  setUsername] = useState("");
   const [password,  setPassword] = useState("");
   const [privateKey,  setPrivateKey] = useState("");
@@ -30,9 +30,9 @@ function App() {
   return (
     <div>
       {
-      signup ?<Signup socket={socket} curUserData={curUserData} />:
-      chat ?<Chat socket={socket} curUserData={curUserData}/>:
-      <Login socket={socket} curUserData={curUserData}/>}
+      signup ?<Signup socket={socket} curUserData={curUserData} setSignup={setSignup} setChat={setChat}/>:
+      chat ?<Chat socket={socket} curUserData={curUserData} setSignup={setSignup} setChat={setChat}/>:
+      <Login socket={socket} curUserData={curUserData} setSignup={setSignup} setChat={setChat}/>}
     </div>
   );
 }

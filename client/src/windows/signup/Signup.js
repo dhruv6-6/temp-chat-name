@@ -19,34 +19,51 @@ import {
 
 
 const Signup = (props)=>{
-    const [usernameExist , setUsernameExist] = useState(0);
-    var {socket , curUserData} = props;
+    const [usernameExist , setUsernameExist] = useState("#EBEBEB");
+    var {socket , curUserData , setChat , setSignup} = props;
     function signUpInit(){
-        console.log(curUserData);
+        console.log("initialising sign up\n",curUserData);
         generateRSAKeys().then(({publicKey,privateKey})=>{
+            console.log(publicKey , privateKey);
             encryptPrivateKey(privateKey , curUserData.username + curUserData.password).then(encryptedPrivateKey=>{
-
+                console.log(encryptedPrivateKey);
+                
                 encrypt(publicKey , curUserData.password).then(encryptedPassword=>{
-                    socket.emit("sign-up-init" , {username:curUserData.username , encryptedPrivateKey , encryptedPassword});
+                    console.log(encryptedPassword)
+                    socket.emit("sign-up-init" , {username:curUserData.username , publicKey,  encryptedPrivateKey , encryptedPassword});
+                }).catch(err=>{
+                    console.log(err);
                 })
+            }).catch(err=>{
+                console.log(err);
             })
+        }).catch(err=>{
+            console.log(err);
         })
     }
     useEffect(()=>{
-        // socket.emit("changed", curUserData);
+        socket.on("username-exist" , data=>{
+            console.log("ae vediya");
+            setUsernameExist("#e67b7b");
+        })
+        socket.on("sign-up-complete", data=>{
+            console.log("completed\n");
+            setChat(1);  setSignup(0);
+        })
         return ()=>{
-            // socket.off("changed");
+            socket.off("username-exist");
         }
-    },[curUserData.username , curUserData.password]);
+    },[socket]);
 
     return(
         <div className="full_screen_box_2">
             <div className='login_area_2'>
                 <div className='username_2'>
                     <p className='username_writting_2'>Username</p>
-                    <input className='username_input_2' onChange={(e)=>{    
-                        curUserData.setUsername(e.target.value);
+                    <input style={{backgroundColor:usernameExist}} className='username_input_2' onChange={(e)=>{    
+                        curUserData.setUsername(e.target.value); setUsernameExist("#EBEBEB");
                     }}></input>
+                    
                     <>
                     usernameExist? <p>username exist</p>:<></>
                     </>
@@ -61,7 +78,7 @@ const Signup = (props)=>{
                 <div className='button_area_2'>
                     <button className='sign_up_button_2' onClick={signUpInit}>Sign Up</button>
                 </div>
-            </div>
+            </div> 
         </div>
     )
 }
