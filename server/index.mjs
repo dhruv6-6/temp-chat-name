@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 });
 let thisU;
 io.on("connection", function (socket) {
-    console.log(socket.id + " connected!");
+    console.log(socket.id + " connected!"); 
     socket.on("sign-up-init", async (data) => {
         let f = 1;
         await getUserData({ username: data.username }).then((res) => {
