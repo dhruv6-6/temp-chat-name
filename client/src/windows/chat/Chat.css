@@ -22,25 +22,19 @@
     width:330px;
 }
 
-.search_user_area{
-    display: flex;
-    flex-direction: row;
-    height: 68px;
-    width: 100%;
-}
-
-.search_box{
-    width: 270px;
+.search_box_1{
+    width: 89%;
     height: 30px;
     margin-right:1px;
     margin-left: 19px;
     margin-top:17px;
+    margin-bottom: 17px;
     
     background: #F5F5F5;
     border-radius: 14px;
     border-style: none;
 }
-.search_box::placeholder{
+.search_box_1::placeholder{
     font-family: 'Libre Baskerville';
     font-style: normal;
     font-weight: 400;
@@ -48,11 +42,6 @@
     padding-left: 11px;
 
     color: #1D3557;
-}
-
-.dots{   
-    height: 32px;
-    margin-top:18.5px;
 }
 
 .user_names{
@@ -166,4 +155,70 @@
     color: #F5F5F5;
     border-bottom-right-radius: 11px;
     border-top-right-radius: 11px;
+}
+.add_user_popup_css{
+    margin-top: 140px;
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    border-radius: 11px;
+    box-shadow: 0px 0px 4px 1.3px rgba(0, 0, 0, 0.4);
+    height:100px;
+    align-items: center;
+}
+.create_group_button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 11px;
+    flex:1;
+    width:95%;
+    border-style: none;
+    background-color: #D9D9D9;
+}
+.add_user_button{
+    flex:1;
+    border-radius: 11px;
+    width:95%;
+    border-style: none;
+    margin-bottom: 10px;
+    background-color: #D9D9D9;
+}
+
+.add_user_search_area{
+    display: flex;
+    flex-direction: row;
+}
+.back_button{
+    width:30px;
+    height:30px;
+    margin-top: 17px;
+    margin-left: 19px;
+    background-color: transparent;
+    border-style: none;
+}
+.back_button_image{
+    width:30px;
+    height:30px;
+}
+
+.search_box_2{
+    width: 73%;
+    height: 30px;
+    margin-right:1px;
+    margin-left: 19px;
+    margin-top:17px;
+    margin-bottom: 17px;
+    
+    background: #F5F5F5;
+    border-radius: 14px;
+    border-style: none;
+}
+.search_box_2::placeholder{
+    font-family: 'Libre Baskerville';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    padding-left: 11px;
+
+    color: #1D3557;
 }

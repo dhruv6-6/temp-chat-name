@@ -1,7 +1,6 @@
-import React from "react";
+import {React , useState} from "react";
 import './Chat.css';
 
-import dots from './images/3dots.png'
 import adduser from './images/adduser.png'
 import call from './images/call.png'
 import videocall from './images/videocall.png'
@@ -9,8 +8,40 @@ import logout from './images/logout.png'
 import callhistory from './images/callhistory.png'
 import settings from './images/settings.png'
 import user from './images/users.png'
+import backbutton from './images/backButton.png'
+import creategroup from './images/createGroup.png'
 
 const Chat = ()=>{
+    const [normal_search_area , Set_normal_search_area] = useState(1);
+    const [add_user_popup , Set_add_user_popup] = useState(0);
+    const [make_group_window , Set_make_group_window] = useState(0);
+    const [add_user_window , Set_add_user_window] = useState(0);
+
+    const change_to_main_chat_window = () =>{
+        Set_normal_search_area(1)
+        Set_add_user_popup(0);
+        Set_add_user_window(0);
+        Set_make_group_window(0);
+    }
+    const user_add_popup_window = () =>{
+        if(make_group_window || add_user_window){
+            change_to_main_chat_window();
+        }
+        else{
+            Set_add_user_popup(1^add_user_popup);
+        }
+    }
+    const change_to_add_user_window = () =>{
+        Set_normal_search_area(0);
+        Set_add_user_popup(0);
+        Set_add_user_window(1);
+    }
+    const change_to_create_group_window = () =>{
+        Set_normal_search_area(0);
+        Set_add_user_popup(0);
+        Set_make_group_window(1);
+    }
+
     return(
         <div className="main_body">
             <div className="sidebar">
@@ -23,6 +54,9 @@ const Chat = ()=>{
                 <button className="sidebar_button">
                     <img src = {callhistory} className="sidebar_image"></img>
                 </button>
+                <button className="sidebar_button" onClick={() => {user_add_popup_window()}}>
+                    <img src= {creategroup} className="sidebar_image"></img>
+                </button>
                 <button className="sidebar_button logout_button">
                     <img src= {logout} className="sidebar_image"></img>
                 </button>
@@ -31,11 +65,28 @@ const Chat = ()=>{
                 </button>
             </div>
             <div className="user_names_area">
-                <div className="search_user_area">
-                    <input placeholder="Search" className="search_box"></input>
-                    <img src = {dots} className="dots"></img>
+                {normal_search_area 
+                ? 
+                    <input placeholder="Search" className="search_box_1"></input>
+                :
+                    <div className="add_user_search_area">
+                        <button onClick={() => {change_to_main_chat_window()}} className="back_button">
+                            <img src={backbutton} className="back_button_image"></img> 
+                        </button>
+                        <input placeholder="Search User" className="search_box_2"></input>
+                    </div>
+                }  
+                <div className="user_names">
+                    {add_user_popup  
+                    ?
+                        <div className="add_user_popup_css">
+                            <button onClick={() => {change_to_create_group_window()}} className="create_group_button">Create Group</button>
+                            <button onClick={() => {change_to_add_user_window()}} className="add_user_button">Add User</button>
+                        </div>
+                    :
+                        <></>
+                    }
                 </div>
-                <div className="user_names"></div>
             </div>
             <div className="chat_area">
                 <div className="chatter_info">
