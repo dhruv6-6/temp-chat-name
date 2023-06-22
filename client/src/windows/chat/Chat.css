@@ -222,3 +222,49 @@
 
     color: #1D3557;
 }
+
+.make_group_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    height:100%;
+    border-radius: 11px;
+}
+.enter_group_name{
+    margin-top: 13px;
+    margin-bottom: 10px;
+    border-radius: 11px;
+    height:30px;
+    width:90%;
+    border-style: none;
+    background-color: #D9D9D9;
+}
+.enter_group_name::placeholder{
+    font-family: 'Libre Baskerville';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    padding-left: 14px;
+
+    color: #1D3557;
+}
+.users_to_add{
+    flex:1;
+}
+.main_create_group_button{
+    margin-top: 13px;
+    margin-bottom: 15px;
+    border-radius: 11px;
+    height:30px;
+    width:90%;
+    border-style: none;
+    background-color: #D9D9D9;
+    font-family: 'Libre Baskerville';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    padding-left: 14px;
+    
+    color: #1D3557;
+}

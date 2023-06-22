@@ -85,8 +85,10 @@ const Chat = ()=>{
                     :
                         make_group_window
                         ?   
-                            <div>
-                                <p>make_group_window</p>
+                            <div class = "make_group_box">
+                                <input className="enter_group_name" placeholder="Enter Group Name"></input>
+                                <div className="users_to_add"></div>
+                                <button className="main_create_group_button">Create Group</button>
                             </div>
                         :
                             <div>
