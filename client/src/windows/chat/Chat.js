@@ -11,16 +11,17 @@ import settings from './images/settings.png'
 import user from './images/users.png'
 import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
+import Messages from './components/messages/Messages';
 
 
 const Chat = (props)=>{
     var {socket , curUserData , setChat , setSignup} = props;
 
-    const [normal_search_area , Set_normal_search_area] = useState(1);
-    const [add_user_popup , Set_add_user_popup] = useState(0);
-    const [make_group_window , Set_make_group_window] = useState(0);
-    const [add_user_window , Set_add_user_window] = useState(0);
-    const [chat_history , Set_chat_history] = useState([]);
+    const [normalSearchArea , SetnormalSearchArea] = useState(1);
+    const [addUserPopup , SetaddUserPopup] = useState(0);
+    const [makeGroupWindow , SetmakeGroupWindow] = useState(0);
+    const [addUserWindow , SetaddUserWindow] = useState(0);
+    const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
 
     useEffect(()=>{
         socket.emit("load_chat" , curUserData)
@@ -31,11 +32,11 @@ const Chat = (props)=>{
 
         return(
             <div>
-                <div className="user_info">
-                    <div className="user_icon">
-                        <div className="user_name_image_circle">
-                            <div className="white_circle">
-                                <img src = {Letters[index]} className="user_icon_letter"></img>  
+                <div className="userInfo">
+                    <div className="userIcon">
+                        <div className="userNameImageCircle">
+                            <div className="whiteCircle">
+                                <img src = {Letters[index]} className="userIconLetter"></img>  
                             </div>
                         </div>
                     </div>
@@ -46,79 +47,79 @@ const Chat = (props)=>{
 
     }
 
-    const change_to_main_chat_window = () =>{
-        Set_normal_search_area(1)
-        Set_add_user_popup(0);
-        Set_add_user_window(0);
-        Set_make_group_window(0);
+    const changeToMainChatWindow = () =>{
+        SetnormalSearchArea(1)
+        SetaddUserPopup(0);
+        SetaddUserWindow(0);
+        SetmakeGroupWindow(0);
     }
-    const user_add_popup_window = () =>{
-        if(make_group_window || add_user_window){
-            change_to_main_chat_window();
-            Set_add_user_popup(1^add_user_popup);
+    const userAddPopupWindow = () =>{
+        if(makeGroupWindow || addUserWindow){
+            changeToMainChatWindow();
+            SetaddUserPopup(1^addUserPopup);
         }
         else{
-            Set_add_user_popup(1^add_user_popup);
+            SetaddUserPopup(1^addUserPopup);
         }
     }
-    const change_to_add_user_window = () =>{
-        Set_normal_search_area(0);
-        Set_add_user_popup(0);
-        Set_add_user_window(1);
+    const changeToAddUserWindow = () =>{
+        SetnormalSearchArea(0);
+        SetaddUserPopup(0);
+        SetaddUserWindow(1);
     }
-    const change_to_create_group_window = () =>{
-        Set_normal_search_area(0);
-        Set_add_user_popup(0);
-        Set_make_group_window(1);
+    const changeToCreateGroupWindow = () =>{
+        SetnormalSearchArea(0);
+        SetaddUserPopup(0);
+        SetmakeGroupWindow(1);
     }
 
     return(
-        <div className="main_body">
+        <div className="mainBody">
             <div className="sidebar">
-                <button className="sidebar_button user_button">
-                    <img src = {user} className="sidebar_image"></img>
+                <button className="sidebarButton userButton">
+                    <img src = {user} className="sidebarImage"></img>
                 </button>
-                <button className="sidebar_button">
-                    <img src = {adduser} className="sidebar_image"></img>
+                <button className="sidebarButton">
+                    <img src = {adduser} className="sidebarImage"></img>
                 </button>
-                <button className="sidebar_button">
-                    <img src = {callhistory} className="sidebar_image"></img>
+                <button className="sidebarButton">
+                    <img src = {callhistory} className="sidebarImage"></img>
                 </button>
-                <button className="sidebar_button" onClick={() => {user_add_popup_window()}}>
-                    <img src= {creategroup} className="sidebar_image"></img>
+                <button className="sidebarButton" onClick={() => {userAddPopupWindow()}}>
+                    <img src= {creategroup} className="sidebarImage"></img>
                 </button>
-                <button className="sidebar_button logout_button">
-                    <img src= {logout} className="sidebar_image"></img>
+                <button className="sidebarButton logoutButton">
+                    <img src= {logout} className="sidebarImage"></img>
                 </button>
-                <button className="sidebar_button">
-                    <img src= {settings} className="sidebar_image"></img>
+                <button className="sidebarButton">
+                    <img src= {settings} className="sidebarImage"></img>
                 </button>
             </div>
-            <div className="user_names_area">
-                {normal_search_area 
+            <div className="userNamesArea">
+                {normalSearchArea 
                 ? 
-                    <input placeholder="Search" className="search_box_1"></input>
+                    <input placeholder="Search" className="searchBox1"></input>
                 :
-                    <div className="add_user_search_area">
-                        <button onClick={() => {change_to_main_chat_window()}} className="back_button">
-                            <img src={backbutton} className="back_button_image"></img> 
+                    <div className="addUserSearchArea">
+                        <button onClick={() => {changeToMainChatWindow()}} className="backButton">
+                            <img src={backbutton} className="backButtonImage"></img> 
                         </button>
-                        <input placeholder="Search User" className="search_box_2"></input>
+                        <input placeholder="Search User" className="searchBox2"></input>
                     </div>
                 }  
-                <div className="user_names">
-                    {normal_search_area
+                <div className="userNames">
+                    {normalSearchArea
                     ?
                         <div>
-                            <p>normal_search_area</p>
+                            <p>normalSearchArea</p>
                         </div>
                     :
-                        make_group_window
+                        makeGroupWindow
                         ?   
-                            <div className = "make_group_box">
-                                <input className="enter_group_name" placeholder="Enter Group Name"></input>
-                                <div className="users_to_add"></div>
-                                <button className="main_create_group_button">Create Group</button>
+                            <div className = "makeGroupBox">
+                                <input className="enterGroupName" placeholder="Enter Group Name"></input>
+                                <div className="usersToAdd"></div>
+                                <button className="mainCreateGroupButton">Create Group</button>
                             </div>
                         :
                             <div>
@@ -126,33 +127,33 @@ const Chat = (props)=>{
                             </div>
                     }
 
-                    {add_user_popup  
+                    {addUserPopup  
                     ?
-                        <div className="add_user_popup_css">
-                            <button onClick={() => {change_to_create_group_window()}} className="create_group_button">Create Group</button>
-                            <button onClick={() => {change_to_add_user_window()}} className="add_user_button">Add User</button>
+                        <div className="addUserPopupCss">
+                            <button onClick={() => {changeToCreateGroupWindow()}} className="createGroupButton">Create Group</button>
+                            <button onClick={() => {changeToAddUserWindow()}} className="addUserButton">Add User</button>
                         </div>
                     :
                         <></>
                     }
                 </div>
             </div>
-            <div className="chat_area">
-                <div className="chatter_info">
-                    <button className="videocall_button">
-                        <img src= {videocall} className="userinfo_image"></img>
+            <div className="chatArea">
+                <div className="chatterInfo">
+                    <button className="videocallButton">
+                        <img src= {videocall} className="userinfoImage"></img>
                     </button>
-                    <button className="call_button">
-                        <img src= {call} className="userinfo_image"></img>
+                    <button className="callButton">
+                        <img src= {call} className="userinfoImage"></img>
                     </button>
                 </div>
                 <div className="chats">
                     <div className="messages">
-
+                        {/*<Messages messages = {messages} data={curUserData} />*/}
                     </div>
-                    <div className="send_area">
-                        <input className="message_input" placeholder="Type message"></input>
-                        <button className="send_button">Send</button>
+                    <div className="sendArea">
+                        <input className="messageInput" placeholder="Type message"></input>
+                        <button className="sendButton">Send</button>
                     </div>
                 </div>
             </div>
