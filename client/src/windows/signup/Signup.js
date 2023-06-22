@@ -50,6 +50,7 @@ const Signup = (props)=>{
                     <>
                     usernameExist? <p>username exist</p>:<></>
                     </>
+                    
                 </div>
                 <div className='password_2'>
                     <p className='password_writting_2'>Password</p>
