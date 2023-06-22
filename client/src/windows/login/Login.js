@@ -1,9 +1,52 @@
-import React from 'react';
+import {React , useState ,useEffect } from 'react';
 import './Login.css'
+import {
+    convertBinaryToPEM,
+    arrayBufferToBase64,
+    base64ToArrayBuffer,
+    importPublicKey,
+    importPrivateKey,
+    generateRSAKeys,
+    deriveKeyFromPassword,
+    encryptPrivateKey,
+    decryptPrivateKey,
+    encrypt,
+    decrypt,
+    generateSymKey,
+    encryptSym,
+    decryptSym,
+} from "../../helper.js";
 
 
 const Login = (props)=>{
     var {socket , curUserData , setChat , setSignup} = props;
+    function loginInit(){
+        socket.emit("login-init" , curUserData.username);
+    }
+    useEffect(()=>{
+        socket.on("login-response" , data=>{
+            console.log(data);
+            decryptPrivateKey(data.encryptedPrivateKey , curUserData.username + curUserData.password).then(privateKey=>{
+                decrypt(privateKey , data.encryptedPassword , 0).then(password=>{
+                    console.log("compare", password , curUserData.password)
+                    if (password===curUserData.password){
+                        console.log(curUserData.username + " AUTHENTICATED");
+                        socket.emit("login-authenticate" , {...data , socketID:curUserData.socketID})
+                    }
+                }).catch(err=>{
+                    console.log("FUCK YOU");
+                })
+            }).catch(err=>{
+                console.log("FUCK YOU");
+            })  
+        })
+        socket.on("login-success" , data=>{
+            setChat(1); 
+        })
+        return ()=>{
+            socket.off("login-response");
+        }
+    },[socket , curUserData]);
     return(
         <div className="full_screen_box">
             <div className='login_area'>
@@ -18,14 +61,18 @@ const Login = (props)=>{
                 </div>
                 <div className='username'>
                     <p className='username_writting'>Username</p>
-                    <input className='username_input'></input>
+                    <input className='username_input' onChange={(e)=>{
+                        curUserData.setUsername(e.target.value);
+                    }}></input>
                 </div>
                 <div className='password'>
                     <p className='password_writting'>Password</p>
-                    <input className='password_input'></input>
+                    <input className='password_input' onChange={(e)=>{
+                        curUserData.setPassword(e.target.value);
+                    }}></input>
                 </div>
                 <div className='button_area'>
-                    <button className='sign_up_button'>Log in</button>
+                    <button  className='sign_up_button' onClick={loginInit}>Log in</button>
                 </div>
             </div>
         </div>
