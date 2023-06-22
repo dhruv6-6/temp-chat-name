@@ -11,6 +11,7 @@ import settings from './images/settings.png'
 import user from './images/users.png'
 import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
+import Messages from './components/messages/Messages';
 
 
 const Chat = (props)=>{
@@ -20,7 +21,7 @@ const Chat = (props)=>{
     const [add_user_popup , Set_add_user_popup] = useState(0);
     const [make_group_window , Set_make_group_window] = useState(0);
     const [add_user_window , Set_add_user_window] = useState(0);
-    const [chat_history , Set_chat_history] = useState([]);
+    const [chat_history , Set_chat_history] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
 
     useEffect(()=>{
         socket.emit("load_chat" , curUserData)
@@ -148,7 +149,7 @@ const Chat = (props)=>{
                 </div>
                 <div className="chats">
                     <div className="messages">
-
+                        {/*<Messages messages = {messages} data={curUserData} />*/}
                     </div>
                     <div className="send_area">
                         <input className="message_input" placeholder="Type message"></input>
