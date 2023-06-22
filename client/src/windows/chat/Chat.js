@@ -24,7 +24,6 @@ const Chat = (props)=>{
     const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
 
     useEffect(()=>{
-        socket.emit("load_chat" , curUserData)
     } , [socket])
 
     const UserInfoAddUser = (name)=> {
