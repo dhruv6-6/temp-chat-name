@@ -11,6 +11,7 @@ import settings from './images/settings.png'
 import user from './images/users.png'
 import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
+import Plus from "./images/Plus.png"
 import Messages from './components/messages/Messages';
 
 
@@ -24,23 +25,24 @@ const Chat = (props)=>{
     const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
 
     useEffect(()=>{
-        socket.emit("load_chat" , curUserData)
+        socket.emit("loadChat" , curUserData)
     } , [socket])
 
     const UserInfoAddUser = (name)=> {
         const index = name.name.codePointAt(0) -65;
 
         return(
-            <div>
-                <div className="userInfo">
-                    <div className="userIcon">
-                        <div className="userNameImageCircle">
-                            <div className="whiteCircle">
-                                <img src = {Letters[index]} className="userIconLetter"></img>  
-                            </div>
+            <div className="userInfo">
+                <div className="userIcon">
+                    <div className="userNameImageCircle">
+                        <div className="whiteCircle">
+                            <img src = {Letters[index]} className="userIconLetter"></img>  
                         </div>
                     </div>
-                    <p>{name.name}</p>
+                </div>
+                <p className="userLogName">{name.name}</p>
+                <div className="plusCircle">
+                    <img src={Plus} className="plusIcon"></img>
                 </div>
             </div>
         )
@@ -123,7 +125,7 @@ const Chat = (props)=>{
                             </div>
                         :
                             <div>
-                                <UserInfoAddUser name="Dhruv" />
+                                <UserInfoAddUser name="Armaan" />
                             </div>
                     }
 

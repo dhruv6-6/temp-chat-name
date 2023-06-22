@@ -303,7 +303,32 @@
 .userInfo{
     display: flex;
     flex-direction: row;
+    height: 65px;
+    width:100%;
 }
 .messages{
     margin-bottom:20px;
+}
+.userLogName{
+    padding-top: 19px;
+    margin-left:11px;
+    margin-top: 0px;
+    height:50%;
+    flex:1;
+}
+
+.plusCircle{
+    display: flex;
+    background-color: #D9D9D9;
+    height:45px;
+    width: 45px;
+    border-radius: 30px;
+    margin-right: 12px;
+    margin-top: 10px;
+    justify-content: center;
+}
+.plusIcon{
+    margin-top: 7px;
+    height:30px;
+    width: 30px;
 }
