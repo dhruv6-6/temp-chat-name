@@ -74,7 +74,7 @@ const Signup = (props)=>{
                 <div className='button_area_2'>
                     <button className='sign_up_button_2' onClick={signUpInit}>Sign Up</button>
                 </div>
-            </div>
+            </div> 
         </div>
     )
 }

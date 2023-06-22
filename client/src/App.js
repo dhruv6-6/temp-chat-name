@@ -13,7 +13,7 @@ var socket = io.connect("http://localhost:3001", {
 
 
 function App() {
-  const [signup , setSignup] = useState(1);
+  const [signup , setSignup] = useState(0);
   const [chat , setChat] = useState(0);
   const [username,  setUsername] = useState("");
   const [password,  setPassword] = useState("");
