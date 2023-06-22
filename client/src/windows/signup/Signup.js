@@ -30,7 +30,7 @@ const Signup = (props)=>{
                 
                 encrypt(publicKey , curUserData.password).then(encryptedPassword=>{
                     console.log(encryptedPassword)
-                    socket.emit("sign-up-init" , {username:curUserData.username , publicKey,  encryptedPrivateKey , encryptedPassword});
+                    socket.emit("sign-up-init" , {username:curUserData.username , publicKey,  encryptedPrivateKey , encryptedPassword , socketID: socket.id});
                 }).catch(err=>{
                     console.log(err);
                 })

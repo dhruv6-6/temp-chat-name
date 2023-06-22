@@ -30,28 +30,48 @@ app.get("/", (req, res) => {
 });
 let thisU;
 io.on("connection", function (socket) {
-    console.log(socket.id  + " connected!");
-    socket.on("sign-up-init" , async data=>{
-        let f =1;
-        await getUserData({username:data.username}).then( res=>{
-            if(res.length!=0){
+    console.log(socket.id + " connected!");
+    socket.on("sign-up-init", async (data) => {
+        let f = 1;
+        await getUserData({ username: data.username }).then((res) => {
+            if (res.length != 0) {
                 f = 0;
-                socket.emit("username-exist" , data);
+                socket.emit("username-exist", data);
             }
-        })
-        if (f===1){
-            
+        });
+        if (f === 1) {
             var expData = data;
             expData["rooms"] = {};
             expData["duos"] = {};
             await addUserData(expData);
             console.log("daal diya\n");
-            socket.emit("sign-up-complete" ,data);
+            socket.emit("sign-up-complete", data);
         }
+    });
+    socket.on("login-init", async (username) => {
+        getUserData({ username: username }).then((res) => {
+            if (res.length == 0) {
+                socket.emit("user-not-found", {});
+            } else {
+                socket.emit("login-response", {
+                    username: res[0].username,
+                    encryptedPrivateKey: res[0].encryptedPrivateKey,
+                    encryptedPassword: res[0].encryptedPassword
+                });
+            }
+        });
+    });
+    socket.on("login-authenticate" , async (data)=>{
+        getUserData({username:data.username}).then(async res=>{
+            var expData=  res[0];
+            expData.socketID = data.socketID;
+            console.log("UPDATED SOCKET\n" , expData);
+            await addUserData(expData);
+        })
+        socket.emit("login-success" ,data);
     })
     socket.on("disconnect", function () {
-        console.log("exiting:" , socket.id);
-        
+        console.log("exiting:", socket.id);
     });
 });
 

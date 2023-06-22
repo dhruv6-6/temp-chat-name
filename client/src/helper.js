@@ -159,7 +159,6 @@ const decryptPrivateKey = async (encryptedPrivateKey, secretString) => {
     const salt = base64ToArrayBuffer(saltBase64);
     const iv = base64ToArrayBuffer(ivBase64);
     const encryptedData = base64ToArrayBuffer(encryptedDataBase64);
-
     const secretKey = await deriveKeyFromPassword(secretString, salt);
     const decryptedData = await crypto.subtle.decrypt(
         {
@@ -193,7 +192,10 @@ const encrypt = async (publicKey, plaintext, key) => {
 
 const decrypt = async (privateKey, encryptedData, key) => {
     const importedPrivateKey = await importPrivateKey(privateKey);
+    console.log(encryptedData)
     var encodedEncryptedData = base64ToArrayBuffer(encryptedData);
+    console.log(encodedEncryptedData);
+
     const decryptedData = await crypto.subtle.decrypt(
         { name: "RSA-OAEP" },
         importedPrivateKey,
