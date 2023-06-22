@@ -31,9 +31,18 @@ app.get("/", (req, res) => {
 let thisU;
 io.on("connection", function (socket) {
     console.log(socket.id  + " connected!");
-    
+    socket.on("sign-up-init" , data=>{
+        
+        addUserData({
+            data
+        })
+    })
+    socket.on("changed" ,data=>{
+        
+        console.log("CHANGED\n",data);
+    })
     socket.on("disconnect", function () {
-        console.log("exiting:" , thisU);
+        console.log("exiting:" , socket.id);
         
     });
 });
