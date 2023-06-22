@@ -35,6 +35,7 @@ const Chat = ()=>{
                 </div>
             </div>
         )
+        
     }
 
     const change_to_main_chat_window = () =>{
