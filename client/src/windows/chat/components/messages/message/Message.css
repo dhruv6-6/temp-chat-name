@@ -1,0 +1,67 @@
+.messageContainer {
+  padding: 5px 15px;
+  overflow: hidden;
+}
+.allInfoBox{
+    display: flex;
+    flex-direction: column;
+}
+
+.messageBox {
+    display: flex;
+    background: #A8DADC;
+    border-radius: 16px;
+    padding: 3px 10px;
+    color: white;
+    display: inline-block;
+    max-width: 75%;
+}
+  
+.messageText {
+    width: 100%;
+    letter-spacing: 0;
+    float: left;
+    font-size: 15px;
+    word-wrap: break-word;
+    color: #1D3557;
+}
+
+  
+
+.myContainer{
+    align-items: flex-end;
+}
+.hisContainer{
+    align-items: flex-start;
+}
+
+.nameDate{
+    display: flex;
+    flex-direction: row;
+}
+.hisName{
+    margin-top: 8px;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    font-family: Helvetica;
+    color: #828282;
+    letter-spacing: 0;
+    padding-left: 9px;
+}
+
+.time{
+    margin-top: 8px;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    font-family: Helvetica;
+    color: #828282;
+    letter-spacing: 0;
+}
+.myTime{
+    padding-right: 9px;
+}
+.hisTime{
+    padding-left: 9px;
+}
