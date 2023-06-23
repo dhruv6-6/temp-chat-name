@@ -48,12 +48,13 @@ const Signup = (props)=>{
         })
         socket.on("sign-up-complete", data=>{
             console.log("completed\n");
+            socket.emit("get-duoList", curUserData.username);
             setChat(1);  setSignup(0);
         })
         return ()=>{
             socket.off("username-exist");
         }
-    },[socket]);
+    },[socket, curUserData , setChat , setSignup] );
 
     return(
         <div className="full_screen_box_2">
