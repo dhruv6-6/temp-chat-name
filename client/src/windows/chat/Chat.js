@@ -20,7 +20,8 @@ import Messages from './components/messages/Messages';
 
 const Chat = (props)=>{
     var {socket , curUserData , setChat , setSignup} = props;
- 
+   
+    
     const [normalSearchArea , SetnormalSearchArea] = useState(1);
     const [addUserPopup , SetaddUserPopup] = useState(0);
     const [userRequestPopup , SetuserRequestPopup] = useState(0);
