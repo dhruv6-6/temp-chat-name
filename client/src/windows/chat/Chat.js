@@ -148,7 +148,7 @@ const Chat = (props)=>{
     return(
         <div className="mainBody">
             <div className="sidebar">
-                <button className="sidebarButton userButton">
+                <button className="sidebarButton userButton" onClick={()=>{changeToMainChatWindow()}}>
                     <img src = {chat} className="sidebarImage"></img>
                 </button>
                 <button className="sidebarButton">
