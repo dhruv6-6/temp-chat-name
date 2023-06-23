@@ -28,7 +28,7 @@ const Chat = (props)=>{
     const [addUserWindow , SetaddUserWindow] = useState(0);
     const [sentRequestWindow , SetsentRequestWindow] = useState(0);
     const [recievedRequestWindow  , SetrecievedRequestWindow] = useState(0);
-    const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:"how are you"},{time:new Date() , sender:"armaan" , message:"good"}]);
+    const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:"how are you bro this is a big line check dont mind me hjow big do i have to make it to check like omg what the hell"},{time:new Date() , sender:"armaan" , message:"good"}]);
     const [gloablQueryResult, setGlobalQueryResult] = useState([]);
 
     function userSearch(data){
