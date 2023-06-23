@@ -27,8 +27,8 @@ const Chat = (props)=>{
     const [makeGroupWindow , SetmakeGroupWindow] = useState(0);
     const [addUserWindow , SetaddUserWindow] = useState(0);
     const [sentRequestWindow , SetsentRequestWindow] = useState(0);
-    const [recievedRequestPage  , SetrecievedRequestPage] = useState(0);
-    const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
+    const [recievedRequestWindow  , SetrecievedRequestWindow] = useState(0);
+    const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:"how are you"},{time:new Date() , sender:"armaan" , message:"good"}]);
     const [gloablQueryResult, setGlobalQueryResult] = useState([]);
 
     function userSearch(data){
@@ -94,7 +94,7 @@ const Chat = (props)=>{
         SetaddUserWindow(0);
         SetmakeGroupWindow(0);
         SetsentRequestWindow(0);
-        SetrecievedRequestPage(0);
+        SetrecievedRequestWindow(0);
         SetuserRequestPopup(0);
     }
     
@@ -123,21 +123,21 @@ const Chat = (props)=>{
         SetaddUserPopup(0);
         SetaddUserWindow(1);
         SetsentRequestWindow(0);
-        SetrecievedRequestPage(0);
+        SetrecievedRequestWindow(0);
     }
     const changeToCreateGroupWindow = () =>{
         SetnormalSearchArea(0);
         SetaddUserPopup(0);
         SetmakeGroupWindow(1);
         SetsentRequestWindow(0);
-        SetrecievedRequestPage(0);
+        SetrecievedRequestWindow(0);
     }
     const changeToRecievedRequestWindow = ()=>{
         SetsentRequestWindow(0);
         SetnormalSearchArea(0);
         SetaddUserPopup(0);
         SetmakeGroupWindow(0 );
-        SetrecievedRequestPage(1);
+        SetrecievedRequestWindow(1);
         SetuserRequestPopup(0);
     }
     const changeToSentRequestWindow = ()=>{
@@ -145,7 +145,7 @@ const Chat = (props)=>{
         SetnormalSearchArea(0);
         SetaddUserPopup(0);
         SetmakeGroupWindow(0);
-        SetrecievedRequestPage(0);
+        SetrecievedRequestWindow(0);
         SetuserRequestPopup(0);
     }
 
@@ -253,7 +253,7 @@ const Chat = (props)=>{
                 </div>
                 <div className="chats">
                     <div className="messages">
-                        {/*<Messages messages = {messages} data={curUserData} />*/}
+                        <Messages messages = {chatHistory} data={curUserData} />
                     </div>
                     <div className="sendArea">
                         <input className="messageInput" placeholder="Type message"></input>
