@@ -336,3 +336,31 @@
     height:30px;
     width: 30px;
 }
+.acceptCircle{
+    height: 50px;
+    width: 50px;
+    margin: 0px;
+    margin-top: 9px;
+    background-color: transparent;
+    border-radius: 29px;
+    margin-right: 5px;
+    border-style: none;
+}
+.rejectCircle{
+    height: 50px;
+    width: 50px;
+    margin: 0px;
+    margin-top: 9px;
+    margin-right: 5px;
+    background-color: transparent;
+    border-radius: 29px;
+    border-style: none;
+}
+.acceptIcon{
+    height:43px;
+    width:43px;
+}
+.rejectIcon{
+    height:43px;
+    width:43px;
+}

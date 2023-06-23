@@ -13,6 +13,8 @@ import backbutton from './images/backButton.png'
 import creategroup from './images/createGroup.png'
 import Plus from "./images/Plus.png"
 import chat from "./images/chats.png"
+import reject from "./images/reject.png"
+import accept from "./images/accept.png"
 import Messages from './components/messages/Messages';
 
 
@@ -24,7 +26,8 @@ const Chat = (props)=>{
     const [userRequestPopup , SetuserRequestPopup] = useState(0);
     const [makeGroupWindow , SetmakeGroupWindow] = useState(0);
     const [addUserWindow , SetaddUserWindow] = useState(0);
-    const [pendingRequestWindow , SetpendingRequestWindow] = useState(0);
+    const [sentRequestWindow , SetsentRequestWindow] = useState(0);
+    const [recievedRequestPage  , SetrecievedRequestPage] = useState(0);
     const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
     const [gloablQueryResult, setGlobalQueryResult] = useState([]);
 
@@ -58,10 +61,22 @@ const Chat = (props)=>{
                     </div>
                 </div>
                 <p className="userLogName">{props.name}</p>
-
-                <button className="plusCircle">
-                    <img src={Plus} className="plusIcon"></img>
-                </button>
+                {
+                    addUserWindow
+                    ?
+                    <button className="plusCircle">
+                        <img src={Plus} className="plusIcon"></img>
+                    </button>
+                    :
+                    <div>
+                        <button className="acceptCircle">
+                            <img src={accept} className="acceptIcon"></img>
+                        </button>
+                        <button className="rejectCircle">
+                            <img src={reject} className="rejectIcon"></img>
+                        </button>
+                    </div>
+                }
 
             </div>
         )
@@ -74,6 +89,9 @@ const Chat = (props)=>{
         SetaddUserPopup(0);
         SetaddUserWindow(0);
         SetmakeGroupWindow(0);
+        SetsentRequestWindow(0);
+        SetrecievedRequestPage(0);
+        SetuserRequestPopup(0);
     }
     
     const userAddPopupWindow = () =>{
@@ -83,6 +101,7 @@ const Chat = (props)=>{
         }
         else{
             SetaddUserPopup(1^addUserPopup);
+            SetuserRequestPopup(0);
         }
     }
     const userRequestPopupWindow = () =>{
@@ -92,23 +111,38 @@ const Chat = (props)=>{
         }
         else{
             SetuserRequestPopup(1^userRequestPopup);
+            SetaddUserPopup(0);
         }
     }
     const changeToAddUserWindow = () =>{
         SetnormalSearchArea(0);
         SetaddUserPopup(0);
         SetaddUserWindow(1);
+        SetsentRequestWindow(0);
+        SetrecievedRequestPage(0);
     }
     const changeToCreateGroupWindow = () =>{
         SetnormalSearchArea(0);
         SetaddUserPopup(0);
         SetmakeGroupWindow(1);
+        SetsentRequestWindow(0);
+        SetrecievedRequestPage(0);
     }
-    const changeToPendingRequestWindow = ()=>{
-
+    const changeToRecievedRequestWindow = ()=>{
+        SetsentRequestWindow(0);
+        SetnormalSearchArea(0);
+        SetaddUserPopup(0);
+        SetmakeGroupWindow(0 );
+        SetrecievedRequestPage(1);
+        SetuserRequestPopup(0);
     }
-    const changeToFriendRequestWindow = ()=>{
-
+    const changeToSentRequestWindow = ()=>{
+        SetsentRequestWindow(1);
+        SetnormalSearchArea(0);
+        SetaddUserPopup(0);
+        SetmakeGroupWindow(0);
+        SetrecievedRequestPage(0);
+        SetuserRequestPopup(0);
     }
 
     return(
@@ -159,23 +193,36 @@ const Chat = (props)=>{
                             <p>normalSearchArea</p>
                         </div>
                     :
-                        makeGroupWindow
-                        ?   
-                            <div className = "makeGroupBox">
-                                <input className="enterGroupName" placeholder="Enter Group Name"></input>
-                                <div className="usersToAdd"></div>
-                                <button className="mainCreateGroupButton">Create Group</button>
-                            </div>
-                        :
-                            <div>
-                                {gloablQueryResult.map((e)=> { return (<UserInfo name={e} />);} )}
-                            </div>
+                    makeGroupWindow
+                    ?   
+                        <div className = "makeGroupBox">
+                            <input className="enterGroupName" placeholder="Enter Group Name"></input>
+                            <div className="usersToAdd"></div>
+                            <button className="mainCreateGroupButton">Create Group</button>
+                        </div>
+                    :
+                    addUserWindow
+                    ?
+                        <div>
+                            {gloablQueryResult.map((e)=> { return (<UserInfo name={e} />);} )}
+                        </div>
+                    :
+                    sentRequestWindow
+                    ?
+                        <div>
+                            <p>sent req</p>
+                        </div>
+                    :
+                        <div>
+                            <UserInfo name="armaan" />
+                        </div>                                
+
                     }
                     {userRequestPopup  
                     ?
                         <div className="PopupCss">
-                            <button onClick={() => {changeToPendingRequestWindow()}} className="createGroupButton">Pending Requests</button>
-                            <button onClick={() => {changeToFriendRequestWindow()}} className="addUserButton">Friend Requests</button>
+                            <button onClick={() => {changeToRecievedRequestWindow()}} className="createGroupButton">Recieved Requests</button>
+                            <button onClick={() => {changeToSentRequestWindow()}} className="addUserButton">Sent Requests</button>
                         </div>
                     :
                         <></>
