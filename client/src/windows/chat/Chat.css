@@ -84,10 +84,6 @@
     height:30px;
 }
 
-.userButton{
-    margin-top: 55px;
-}
-
 
 .userinfoImage{
     margin-top: 5px;
@@ -363,4 +359,12 @@
 .rejectIcon{
     height:43px;
     width:43px;
+}
+.logo{
+    background-color: transparent;
+    height: 36px;
+    margin-top: 7px;
+    margin-left: 7px;
+    margin-bottom: 7px;
+    width: 36px;
 }

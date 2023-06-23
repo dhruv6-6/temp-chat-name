@@ -12,6 +12,7 @@ import user from "./images/users.png";
 import backbutton from "./images/backButton.png";
 import creategroup from "./images/createGroup.png";
 import Plus from "./images/Plus.png";
+import logo from "./images/logoSymbol.png";
 import chat from "./images/chats.png";
 import reject from "./images/reject.png";
 import accept from "./images/accept.png";
@@ -178,8 +179,9 @@ const Chat = (props) => {
     return (
         <div className="mainBody">
             <div className="sidebar">
+                <img src={logo} className="logo"></img>
                 <button
-                    className="sidebarButton userButton"
+                    className="sidebarButton"
                     onClick={() => {
                         changeToMainChatWindow();
                     }}
