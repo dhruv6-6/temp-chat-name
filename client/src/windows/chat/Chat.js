@@ -26,13 +26,27 @@ const Chat = (props)=>{
     const [addUserWindow , SetaddUserWindow] = useState(0);
     const [pendingRequestWindow , SetpendingRequestWindow] = useState(0);
     const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:""}]);
+    const [gloablQueryResult, setGlobalQueryResult] = useState([]);
 
+    function userSearch(data){
+        socket.emit("search-user-global" , data);
+    }
+    
     useEffect(()=>{
-        socket.emit("loadChat" , curUserData)
-    } , [socket])
+        if (addUserWindow===1){
+            socket.on("search-user-global-response" , (data)=>{
+                setGlobalQueryResult(data);
+            });
+        }else{
+            setGlobalQueryResult([]);
+            return ()=>{
+                socket.off("search-user-gloabl-response");
+            }
+        }
+    } , [socket , addUserWindow])
 
-    const UserInfo = (name)=> {
-        const index = name.name.codePointAt(0) -65;
+    const UserInfo = (props)=> {
+        const index = props.name.codePointAt(0) - 97;
 
         return(
             <div className="userInfo">
@@ -43,17 +57,18 @@ const Chat = (props)=>{
                         </div>
                     </div>
                 </div>
-                <p className="userLogName">{name.name}</p>
+                <p className="userLogName">{props.name}</p>
 
-                <div className="plusCircle">
+                <button className="plusCircle">
                     <img src={Plus} className="plusIcon"></img>
-                </div>
+                </button>
 
             </div>
         )
 
     }
-
+        
+    
     const changeToMainChatWindow = () =>{
         SetnormalSearchArea(1)
         SetaddUserPopup(0);
@@ -131,7 +146,10 @@ const Chat = (props)=>{
                         <button onClick={() => {changeToMainChatWindow()}} className="backButton">
                             <img src={backbutton} className="backButtonImage"></img> 
                         </button>
-                        <input placeholder="Search User" className="searchBox2"></input>
+                        <input placeholder="Search User"  className="searchBox2" onChange={(e)=>{
+                            e.target.value = e.target.value.toLowerCase();
+                            userSearch(e.target.value);
+                        }}></input>
                     </div>
                 }  
                 <div className="userNames">
@@ -150,7 +168,7 @@ const Chat = (props)=>{
                             </div>
                         :
                             <div>
-                                <UserInfo name="Armaan" />
+                                {gloablQueryResult.map((e)=> { return (<UserInfo name={e} />);} )}
                             </div>
                     }
                     {userRequestPopup  

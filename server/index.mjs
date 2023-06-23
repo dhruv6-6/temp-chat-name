@@ -70,6 +70,17 @@ io.on("connection", function (socket) {
         })
         socket.emit("login-success" ,data);
     })
+    socket.on("search-user-global" , async (data)=>{
+        var expData = [ ];
+        await getUserData({}).then(res=>{
+            res.forEach((e)=>{
+                if (e.username.length >= data.length && e.username.substring(0 , data.length)==data){
+                    expData.push( e.username);
+                }
+            })
+        })
+        socket.emit("search-user-global-response" , expData);
+    })
     socket.on("disconnect", function () {
         console.log("exiting:", socket.id);
     });
