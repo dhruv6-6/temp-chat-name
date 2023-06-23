@@ -30,17 +30,6 @@ const Chat = (props) => {
     const [recievedRequestList, setRecievedRequestList] = useState([]);
     const [sentRequestList, setSentRequestList] = useState([]);
     const [duoList, setDuoList] = useState([]);
-
-const Chat = (props)=>{
-    var {socket , curUserData , setChat , setSignup} = props;
- 
-    const [normalSearchArea , SetnormalSearchArea] = useState(1);
-    const [addUserPopup , SetaddUserPopup] = useState(0);
-    const [userRequestPopup , SetuserRequestPopup] = useState(0);
-    const [makeGroupWindow , SetmakeGroupWindow] = useState(0);
-    const [addUserWindow , SetaddUserWindow] = useState(0);
-    const [sentRequestWindow , SetsentRequestWindow] = useState(0);
-    const [recievedRequestWindow  , SetrecievedRequestWindow] = useState(0);
     const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:"how are you"},{time:new Date() , sender:"armaan" , message:"good"}]);
     const [gloablQueryResult, setGlobalQueryResult] = useState([]);
 
