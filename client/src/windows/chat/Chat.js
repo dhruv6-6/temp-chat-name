@@ -36,6 +36,11 @@ const Chat = (props)=>{
     }
     
     useEffect(()=>{
+        if (recievedRequestPage){
+            socket.on("recieving-requests" ,data=>{
+                set
+            })
+        }
         if (addUserWindow===1){
             socket.on("search-user-global-response" , (data)=>{
                 setGlobalQueryResult(data);
@@ -46,11 +51,10 @@ const Chat = (props)=>{
                 socket.off("search-user-gloabl-response");
             }
         }
-    } , [socket , addUserWindow])
+    } , [socket , addUserWindow , recievedRequestPage])
 
     const UserInfo = (props)=> {
         const index = props.name.codePointAt(0) - 97;
-
         return(
             <div className="userInfo">
                 <div className="userIcon">
