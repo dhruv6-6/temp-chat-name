@@ -31,6 +31,11 @@ const Chat = (props)=>{
     function userSearch(data){
         socket.emit("search-user-global" , data);
     }
+    function sendRequest(data){
+        console.log("sending to " , data);
+        socket.emit("send-user-request" , {sender:curUserData.username,  reciever:data});
+    }
+    
     
     useEffect(()=>{
         if (addUserWindow===1){
@@ -41,8 +46,10 @@ const Chat = (props)=>{
             setGlobalQueryResult([]);
             return ()=>{
                 socket.off("search-user-gloabl-response");
+
             }
         }
+
     } , [socket , addUserWindow])
 
     const UserInfo = (props)=> {
@@ -59,7 +66,7 @@ const Chat = (props)=>{
                 </div>
                 <p className="userLogName">{props.name}</p>
 
-                <button className="plusCircle">
+                <button className="plusCircle" onClick={(e)=>{console.log("Seding",props.name);sendRequest(props.name)}}>
                     <img src={Plus} className="plusIcon"></img>
                 </button>
 
@@ -167,7 +174,7 @@ const Chat = (props)=>{
                             </div>
                         :
                             <div>
-                                {gloablQueryResult.map((e)=> { return (<UserInfo name={e} />);} )}
+                                {(gloablQueryResult.filter(e=>{return e!=curUserData.username;})).map((e)=> { return (<UserInfo name={e} />);} )}
                             </div>
                     }
                     {userRequestPopup  

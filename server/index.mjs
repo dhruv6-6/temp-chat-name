@@ -81,6 +81,33 @@ io.on("connection", function (socket) {
         })
         socket.emit("search-user-global-response" , expData);
     })
+    socket.on("send-user-request" , async (data)=>{
+        console.log(data);
+        var expData;
+        await getUserData({username:data.sender}).then(res=>{
+            expData = res[0];
+        })
+        if (("sentRequests" in expData)===false)
+            expData["sentRequests"] = [];
+        
+        
+        expData["sentRequests"] = [ data.reciever  , ...expData["sentRequests"] ];
+        console.log(expData);
+        await addUserData(expData);
+        
+        
+        await getUserData({username:data.reciever}).then(res=>{
+            expData = res[0];
+        })
+        if (("recievedRequests" in expData)===false)
+            expData["recievedRequests"] = [];
+        
+        
+        expData["recievedRequests"] = [ data.sender  , ...expData["recievedRequests"] ];
+        console.log(expData);
+        await addUserData(expData);
+
+    })
     socket.on("disconnect", function () {
         console.log("exiting:", socket.id);
     });
