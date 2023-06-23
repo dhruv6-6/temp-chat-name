@@ -60,6 +60,7 @@ const Chat = (props)=>{
         SetaddUserWindow(0);
         SetmakeGroupWindow(0);
     }
+    
     const userAddPopupWindow = () =>{
         if(makeGroupWindow || addUserWindow){
             changeToMainChatWindow();
