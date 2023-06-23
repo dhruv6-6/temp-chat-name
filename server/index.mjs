@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import { v1 as uuidv1 } from 'uuid';
 import {
     dbConnect,
     deleteUserData,
@@ -79,6 +80,7 @@ io.on("connection", function (socket) {
                 }
             })
         })
+        console.log(expData);
         socket.emit("search-user-global-response" , expData);
     })
     socket.on("send-user-request" , async (data)=>{
@@ -107,6 +109,58 @@ io.on("connection", function (socket) {
         console.log(expData);
         await addUserData(expData);
 
+    })
+    socket.on("get-sentRequestList" , async (data)=>{
+        console.log(data);
+        getUserData({username:data}).then(res=>{
+            console.log("get-sentRequestList", res[0].sentRequests);
+            socket.emit("recieve-sentRequestList" , res[0].sentRequests);
+        })
+    })
+    socket.on("get-recievedRequestList" , async (data)=>{
+        console.log(data);
+        getUserData({username:data}).then(res=>{
+            console.log("get-recievedRequestList", res[0].recievedRequests);
+            socket.emit("recieve-recievedRequestList" , res[0].recievedRequests);
+        })
+    })
+    socket.on("accept-request", async (data)=>{
+        var expData;
+        await getUserData({username:data[0]}).then(res=>{
+            expData = res[0];
+        })
+        expData.sentRequests = expData.sentRequests.filter((e)=>{
+            return e!=data[1];            
+        })
+        expData.recievedRequests = expData.recievedRequests.filter((e)=>{
+            return e!=data[1];
+        })
+        expData.duos[data[1]] = uuidv1();
+        await addUserData(expData);
+
+
+
+        await getUserData({username:data[1]}).then(res=>{
+            expData = res[0];
+        })
+        expData.sentRequests = expData.sentRequests.filter((e)=>{
+            return e!=data[0];            
+        })
+        expData.recievedRequests = expData.recievedRequests.filter((e)=>{
+            return e!=data[0];
+        })
+        expData.duos[data[0]] = uuidv1();
+        await addUserData(expData);
+    })
+    socket.on("get-duoList" , async (data)=>{
+        console.log("Sending duos\n");
+        var expData;
+        await getUserData({username:data}).then(res=>{
+            expData = res[0].duos;
+        })
+        console.log(expData);
+        socket.emit("recieve-duoList" , expData);
+        
     })
     socket.on("disconnect", function () {
         console.log("exiting:", socket.id);
