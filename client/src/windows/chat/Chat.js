@@ -164,7 +164,7 @@ const Chat = (props)=>{
                     <img src= {creategroup} className="sidebarImage"></img>
                 </button>
                 <div className="middleGap"></div>
-                <button className="sidebarButton logoutButton">
+                <button className="sidebarButton logoutButton" onClick={() => {window.location.reload()}}>
                     <img src= {logout} className="sidebarImage"></img>
                 </button>
                 <button className="sidebarButton">
