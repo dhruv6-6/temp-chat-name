@@ -6,9 +6,12 @@ let schema = new mongoose.Schema({
     publicKey: String,
     encryptedPrivateKey: String,
     encryptedPassword: String,
+    recievedRequests: [],
+    sentRequests: [],
     rooms: Object,
     duos: Object,
     socketID: String
+
 }, { versionKey: false });
 const userSchema = mongoose.model('user' , schema, 'user');
 export {userSchema};

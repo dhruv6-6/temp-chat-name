@@ -34,6 +34,11 @@ const Chat = (props)=>{
     function userSearch(data){
         socket.emit("search-user-global" , data);
     }
+    function sendRequest(data){
+        console.log("sending to " , data);
+        socket.emit("send-user-request" , {sender:curUserData.username,  reciever:data});
+    }
+    
     
     useEffect(()=>{
         if (addUserWindow===1){
@@ -44,8 +49,10 @@ const Chat = (props)=>{
             setGlobalQueryResult([]);
             return ()=>{
                 socket.off("search-user-gloabl-response");
+
             }
         }
+
     } , [socket , addUserWindow])
 
     const UserInfo = (props)=> {
@@ -64,7 +71,7 @@ const Chat = (props)=>{
                 {
                     addUserWindow
                     ?
-                    <button className="plusCircle">
+                    <button className="plusCircle" onClick={(e)=>{console.log("Seding",props.name);sendRequest(props.name)}}>
                         <img src={Plus} className="plusIcon"></img>
                     </button>
                     :
@@ -193,30 +200,17 @@ const Chat = (props)=>{
                             <p>normalSearchArea</p>
                         </div>
                     :
-                    makeGroupWindow
-                    ?   
-                        <div className = "makeGroupBox">
-                            <input className="enterGroupName" placeholder="Enter Group Name"></input>
-                            <div className="usersToAdd"></div>
-                            <button className="mainCreateGroupButton">Create Group</button>
-                        </div>
-                    :
-                    addUserWindow
-                    ?
-                        <div>
-                            {gloablQueryResult.map((e)=> { return (<UserInfo name={e} />);} )}
-                        </div>
-                    :
-                    sentRequestWindow
-                    ?
-                        <div>
-                            <p>sent req</p>
-                        </div>
-                    :
-                        <div>
-                            <UserInfo name="armaan" />
-                        </div>                                
-
+                        makeGroupWindow
+                        ?   
+                            <div className = "makeGroupBox">
+                                <input className="enterGroupName" placeholder="Enter Group Name"></input>
+                                <div className="usersToAdd"></div>
+                                <button className="mainCreateGroupButton">Create Group</button>
+                            </div>
+                        :
+                            <div>
+                                {gloablQueryResult.map((e)=> { return (<UserInfo name={e} />);} )}
+                            </div>
                     }
                     {userRequestPopup  
                     ?
