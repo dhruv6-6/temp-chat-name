@@ -153,13 +153,16 @@ io.on("connection", function (socket) {
         await addUserData(expData);
     })
     socket.on("get-duoList" , async (data)=>{
-        console.log("Sending duos\n");
-        var expData;
+        console.log("Sending duos\n" , data);
+        var expData = null;
         await getUserData({username:data}).then(res=>{
-            expData = res[0].duos;
+            if (res.length!=0)
+                expData = res[0].duos;
         })
-        console.log(expData);
-        socket.emit("recieve-duoList" , expData);
+        if (expData!=null){
+            console.log(expData);
+            socket.emit("recieve-duoList" , expData);
+        }
         
     })
     socket.on("disconnect", function () {

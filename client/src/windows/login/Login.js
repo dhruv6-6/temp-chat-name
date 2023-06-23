@@ -26,27 +26,33 @@ const Login = (props)=>{
     useEffect(()=>{
         socket.on("login-response" , data=>{
             console.log(data);
+            console.log(curUserData)
             decryptPrivateKey(data.encryptedPrivateKey , curUserData.username + curUserData.password).then(privateKey=>{
                 decrypt(privateKey , data.encryptedPassword , 0).then(password=>{
                     console.log("compare", password , curUserData.password)
                     if (password===curUserData.password){
                         console.log(curUserData.username + " AUTHENTICATED");
                         socket.emit("login-authenticate" , {...data , socketID:curUserData.socketID})
+                    }else{
+                        console.log("defFuckyou\n");
                     }
                 }).catch(err=>{
-                    console.log("FUCK YOU");
+                    console.log("1FUCK YOU");
                 })
             }).catch(err=>{
-                console.log("FUCK YOU");
+                console.log("2FUCK YOU");
             })  
         })
         socket.on("login-success" , data=>{
+            socket.emit("get-duoList", curUserData.username);
             setChat(1); 
         })
         return ()=>{
             socket.off("login-response");
+            socket.off("login-success");
+
         }
-    },[socket , curUserData]);
+    },[socket, curUserData , setChat , setSignup]);
     return(
         <div className="full_screen_box">
             <div className='login_area'>
