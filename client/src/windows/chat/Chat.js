@@ -84,6 +84,7 @@ const Chat = (props) => {
                             reciever: curChatName,
                             message: [encryptedMessage0, encryptedMessage1],
                         };
+                        SetchatHistory([...chatHistory , {time:messageData.time, sender:messageData.sender , message:data}]);
                         console.log(messageData);
                         socket.emit("sending-message", messageData);
                     }
@@ -97,6 +98,7 @@ const Chat = (props) => {
             console.log(data);
             setRecievedRequestList(data);
         });
+
         socket.on("recieve-sentRequestList", (data) => {
             console.log(data);
             setSentRequestList(data);

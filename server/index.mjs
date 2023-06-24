@@ -172,13 +172,11 @@ io.on("connection", function (socket) {
     })
     socket.on("sending-message",  async (data)=>{
         await getUserData({username:data.sender}).then(res=>{
-            console.log("sending to him" , res[0].socketID);
             console.log(Array.from(io.sockets.sockets.keys()));
             getRoomData({roomID: res[0]["duos"][data.reciever]}).then(async res2=>{
                 let newD = res2[0];
                 newD["messages"] = [...newD["messages"] , { time:data.time, sender:data.sender , message:data.message[0]}];
                 await addRoomData(newD);
-                io.to(res[0].socketID).emit("recieve-single-message" ,[{ time:data.time, sender:data.sender , message:data.message[0]} ]);
 
             })
         })
