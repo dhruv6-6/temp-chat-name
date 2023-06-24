@@ -24,10 +24,9 @@ const Signup = (props)=>{
     function signUpInit(){
         console.log("initialising sign up\n",curUserData);
         generateRSAKeys().then(({publicKey,privateKey})=>{
-            console.log(publicKey , privateKey);
+            curUserData.setPublicKey(publicKey);
+            curUserData.setPrivateKey(privateKey);
             encryptPrivateKey(privateKey , curUserData.username + curUserData.password).then(encryptedPrivateKey=>{
-                console.log(encryptedPrivateKey);
-                
                 encrypt(publicKey , curUserData.password).then(encryptedPassword=>{
                     console.log(encryptedPassword)
                     socket.emit("sign-up-init" , {username:curUserData.username , publicKey,  encryptedPrivateKey , encryptedPassword , socketID: socket.id});
@@ -43,11 +42,9 @@ const Signup = (props)=>{
     }
     useEffect(()=>{
         socket.on("username-exist" , data=>{
-            console.log("ae vediya");
             setUsernameExist("#e67b7b");
         })
         socket.on("sign-up-complete", data=>{
-            console.log("completed\n");
             socket.emit("get-duoList", curUserData.username);
             setChat(1);  setSignup(0);
         })

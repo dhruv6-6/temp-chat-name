@@ -2,4 +2,5 @@
     margin: 5% 0;
     overflow: auto;
     flex: auto;
+    max-height: 400px;
   }

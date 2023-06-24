@@ -31,6 +31,9 @@ const Login = (props)=>{
                 decrypt(privateKey , data.encryptedPassword , 0).then(password=>{
                     console.log("compare", password , curUserData.password)
                     if (password===curUserData.password){
+                        curUserData.setPublicKey(data.publicKey);
+                        curUserData.setPrivateKey(privateKey);
+
                         console.log(curUserData.username + " AUTHENTICATED");
                         socket.emit("login-authenticate" , {...data , socketID:curUserData.socketID})
                     }else{

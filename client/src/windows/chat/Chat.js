@@ -17,7 +17,22 @@ import chat from "./images/chats.png";
 import reject from "./images/reject.png";
 import accept from "./images/accept.png";
 import Messages from "./components/messages/Messages";
-
+import {
+    convertBinaryToPEM,
+    arrayBufferToBase64,
+    base64ToArrayBuffer,
+    importPublicKey,
+    importPrivateKey,
+    generateRSAKeys,
+    deriveKeyFromPassword,
+    encryptPrivateKey,
+    decryptPrivateKey,
+    encrypt,
+    decrypt,
+    generateSymKey,
+    encryptSym,
+    decryptSym,
+} from "../../helper.js";
 const Chat = (props) => {
     var { socket, curUserData, setChat, setSignup } = props;
 
@@ -31,8 +46,13 @@ const Chat = (props) => {
     const [recievedRequestList, setRecievedRequestList] = useState([]);
     const [sentRequestList, setSentRequestList] = useState([]);
     const [duoList, setDuoList] = useState([]);
-    const [chatHistory , SetchatHistory] = useState([{time:new Date() , sender:"dhruv" , message:"how are you"},{time:new Date() , sender:"armaan" , message:"good"}]);
+    const [chatHistory, SetchatHistory] = useState([
+        { time: new Date(), sender: "dhruv", message: "how are you" },
+        { time: new Date(), sender: "armaan", message: "good" },
+    ]);
     const [gloablQueryResult, setGlobalQueryResult] = useState([]);
+    const [curChatName, setCurChatName] = useState("");
+    const [curChatKey, setCurChatKey] = useState("");
 
     function userSearch(data) {
         socket.emit("search-user-global", data);
@@ -45,6 +65,31 @@ const Chat = (props) => {
     }
     function acceptRequest(data) {
         socket.emit("accept-request", [curUserData.username, data]);
+    }
+    function openChat(data, isDuo = 1) {
+        setCurChatName(data);
+        if (normalSearchArea) {
+            socket.emit("get-chat-details", [curUserData.username, data]);
+        }
+    }
+    function sendMessage(data, isDuo = 1) {
+        if (normalSearchArea) {
+            encrypt(curChatKey, data).then((encryptedMessage1) => {
+                encrypt(curUserData.publicKey, data).then(
+                    (encryptedMessage0) => {
+                        let tt = new Date();
+                        let messageData = {
+                            time: tt,
+                            sender: curUserData.username,
+                            reciever: curChatName,
+                            message: [encryptedMessage0, encryptedMessage1],
+                        };
+                        console.log(messageData);
+                        socket.emit("sending-message", messageData);
+                    }
+                );
+            });
+        }
     }
 
     useEffect(() => {
@@ -61,15 +106,62 @@ const Chat = (props) => {
             setGlobalQueryResult(data);
         });
         socket.on("recieve-duoList", (data) => {
-            console.log("duos", Object.keys(data));
             setDuoList(Object.keys(data));
         });
-    }, [socket]);
+        socket.on("recieve-chat-details", async (data) => {
+            setCurChatKey(data.publicKey);
+            let newMessageList = [];
+            await Promise.all(
+                data.messageList.map(async (e) => {
+                    var ne = e;
+                    ne.time = new Date(ne.time);
+                    ne.message = await decrypt(
+                        curUserData.privateKey,
+                        e.message,
+                        0
+                    );
+                    newMessageList.push(ne);
+                })
+            );
+            SetchatHistory(newMessageList);
+            console.log("bhai mene ye kr diya" , newMessageList);
+        });
+        socket.on("recieve-single-message", async (data) => {
+            console.log("dekh mujhe toh yahi mila" , chatHistory);
+            let newMessageList = [];
+            await Promise.all(
+                data.map(async (e) => {
+                    var ne = e;
+                    ne.time = new Date(ne.time);
+                    ne.message = await decrypt(
+                        curUserData.privateKey,
+                        e.message,
+                        0
+                    );
+                    newMessageList.push(ne);
+                })
+            );
+            SetchatHistory([...chatHistory, ...newMessageList]);
+        });
+        return () => {
+            socket.off("recieve-recievedRequestList");
+            socket.off("recieve-sentRequestList");
+            socket.off("search-user-global-response");
+            socket.off("recieve-duoList");
+            socket.off("recieve-chat-details");
+            socket.off("recieve-single-message");
+        };
+    }, [socket , chatHistory]);
 
     const UserInfo = (props) => {
         const index = props.name.codePointAt(0) - 97;
         return (
-            <div className="userInfo">
+            <div
+                className="userInfo"
+                onClick={(e) => {
+                    openChat(props.name);
+                }}
+            >
                 <div className="userIcon">
                     <div className="userNameImageCircle">
                         <div className="whiteCircle">
@@ -352,10 +444,36 @@ const Chat = (props) => {
                     </div>
                     <div className="sendArea">
                         <input
+                            id="inputMessageBox"
                             className="messageInput"
                             placeholder="Type message"
+                            onKeyDown={(e) => {
+                                if (e.keyCode == 13) {
+                                    sendMessage(
+                                        document.getElementById(
+                                            "inputMessageBox"
+                                        ).value
+                                    );
+                                    document.getElementById(
+                                        "inputMessageBox"
+                                    ).value = "";
+                                }
+                            }}
                         ></input>
-                        <button className="sendButton button">Send</button>
+                        <button
+                            className="sendButton button"
+                            onClick={(e) => {
+                                sendMessage(
+                                    document.getElementById("inputMessageBox")
+                                        .value
+                                );
+                                document.getElementById(
+                                    "inputMessageBox"
+                                ).value = "";
+                            }}
+                        >
+                            Send
+                        </button>
                     </div>
                 </div>
             </div>

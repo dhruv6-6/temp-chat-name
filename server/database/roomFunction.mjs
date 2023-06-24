@@ -23,7 +23,6 @@ const addRoomData = async function (data) {
     return roomSchema.findOneAndUpdate({ roomID: data.roomID }, data, options)
     .exec()
     .then((dbRes) => {
-      console.log("UPDATE SUCCESSFUL\n" , dbRes);
       return dbRes;
     })
     .catch((err) => {
@@ -37,7 +36,6 @@ const getRoomData = async function (data) {
     await roomSchema
         .find(data)
         .then((dbRes) => {
-            console.log(dbRes);
             Rdata = dbRes;
         })
         .catch((err) => {

@@ -44,7 +44,7 @@ io.on("connection", function (socket) {
             expData["rooms"] = {};
             expData["duos"] = {};
             await addUserData(expData);
-            console.log("daal diya\n");
+
             socket.emit("sign-up-complete", data);
         }
     });
@@ -55,6 +55,7 @@ io.on("connection", function (socket) {
             } else {
                 socket.emit("login-response", {
                     username: res[0].username,
+                    publicKey: res[0].publicKey,
                     encryptedPrivateKey: res[0].encryptedPrivateKey,
                     encryptedPassword: res[0].encryptedPassword
                 });
@@ -65,7 +66,6 @@ io.on("connection", function (socket) {
         getUserData({username:data.username}).then(async res=>{
             var expData=  res[0];
             expData.socketID = data.socketID;
-            console.log("UPDATED SOCKET\n" , expData);
             await addUserData(expData);
         })
         socket.emit("login-success" ,data);
@@ -79,11 +79,9 @@ io.on("connection", function (socket) {
                 }
             })
         })
-        console.log(expData);
         socket.emit("search-user-global-response" , expData);
     })
     socket.on("send-user-request" , async (data)=>{
-        console.log(data);
         var expData;
         await getUserData({username:data.sender}).then(res=>{
             expData = res[0];
@@ -93,7 +91,6 @@ io.on("connection", function (socket) {
         
         
         expData["sentRequests"] = [ data.reciever  , ...expData["sentRequests"] ];
-        console.log(expData);
         await addUserData(expData);
         
         
@@ -105,21 +102,16 @@ io.on("connection", function (socket) {
         
         
         expData["recievedRequests"] = [ data.sender  , ...expData["recievedRequests"] ];
-        console.log(expData);
         await addUserData(expData);
 
     })
     socket.on("get-sentRequestList" , async (data)=>{
-        console.log(data);
         getUserData({username:data}).then(res=>{
-            console.log("get-sentRequestList", res[0].sentRequests);
             socket.emit("recieve-sentRequestList" , res[0].sentRequests);
         })
     })
     socket.on("get-recievedRequestList" , async (data)=>{
-        console.log(data);
         getUserData({username:data}).then(res=>{
-            console.log("get-recievedRequestList", res[0].recievedRequests);
             socket.emit("recieve-recievedRequestList" , res[0].recievedRequests);
         })
     })
@@ -136,6 +128,7 @@ io.on("connection", function (socket) {
         })
         expData.duos[data[1]] = uuidv1();
         await addUserData(expData);
+        await addRoomData({roomID:expData.duos[data[1]] , messages:[] , participants:data})
 
 
 
@@ -150,19 +143,57 @@ io.on("connection", function (socket) {
         })
         expData.duos[data[0]] = uuidv1();
         await addUserData(expData);
+        await addRoomData({roomID:expData.duos[data[0]] , messages:[] , participants:data})
+
     })
     socket.on("get-duoList" , async (data)=>{
-        console.log("Sending duos\n" , data);
         var expData = null;
         await getUserData({username:data}).then(res=>{
             if (res.length!=0)
                 expData = res[0].duos;
         })
         if (expData!=null){
-            console.log(expData);
             socket.emit("recieve-duoList" , expData);
         }
         
+    })
+    socket.on("get-chat-details" , async (data)=>{
+        let key , chats, chatid;
+        await getUserData({username:data[1]}).then((res)=>{
+            key = res[0].publicKey;
+        })
+        await getUserData({username:data[0]}).then((res)=>{
+            chatid = res[0].duos[data[1]];
+        })
+        await getRoomData({roomID:chatid}).then((res)=>{
+            chats = res[0].messages;
+        })
+        socket.emit("recieve-chat-details" , {publicKey:key , messageList:chats});
+    })
+    socket.on("sending-message",  async (data)=>{
+        await getUserData({username:data.sender}).then(res=>{
+            console.log("sending to him" , res[0].socketID);
+            console.log(Array.from(io.sockets.sockets.keys()));
+            getRoomData({roomID: res[0]["duos"][data.reciever]}).then(async res2=>{
+                let newD = res2[0];
+                newD["messages"] = [...newD["messages"] , { time:data.time, sender:data.sender , message:data.message[0]}];
+                await addRoomData(newD);
+                io.to(res[0].socketID).emit("recieve-single-message" ,[{ time:data.time, sender:data.sender , message:data.message[0]} ]);
+
+            })
+        })
+        await getUserData({username:data.reciever}).then(res=>{
+            
+            console.log("sending to him" , res[0].socketID);
+            getRoomData({roomID: res[0].duos[data.sender]}).then(async res2=>{
+                let newD = res2[0];
+                newD["messages"] = [...newD["messages"] , { time:data.time, sender:data.sender , message:data.message[1]}];
+                await addRoomData(newD);
+                io.to(res[0].socketID).emit("recieve-single-message" ,[{ time:data.time, sender:data.sender , message:data.message[1]}] );
+
+            })
+        })
+
     })
     socket.on("disconnect", function () {
         console.log("exiting:", socket.id);

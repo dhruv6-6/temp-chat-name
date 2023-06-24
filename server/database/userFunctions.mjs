@@ -24,7 +24,6 @@ const addUserData = async function (data) {
   return userSchema.findOneAndUpdate({ username: data.username }, data, options)
     .exec()
     .then((dbRes) => {
-      console.log("UPDATE SUCCESSFUL\n");
       return dbRes;
     })
     .catch((err) => {
