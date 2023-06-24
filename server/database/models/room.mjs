@@ -5,6 +5,6 @@ let schema = new mongoose.Schema({
     roomID: String,
     messages: [],
     participants: []
-} , { versionKey: false });
+});
 const roomSchema = mongoose.model('room' , schema, 'room');
 export {roomSchema};

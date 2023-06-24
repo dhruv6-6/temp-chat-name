@@ -17,21 +17,6 @@ const dbConnect = async function () {
             console.log("ERR:", err);
         });
 };
-const deleteRoomData = async function (data) {
-    await roomSchema.find({ roomID: data.roomID }).then((dbRes) => {
-        dbRes.forEach((e) => {
-            if (e.roomID == data.roomID) {
-                roomSchema
-                    .deleteOne({ _id: e._id })
-                    .then((status) => {})
-                    .catch((err) => {});
-            }
-        });
-    });
-    return new Promise((resolve, reject) => {
-        resolve();
-    });
-};
 const addRoomData = async function (data) {
     const options = { upsert: true, new: true };
 
@@ -67,4 +52,4 @@ const getRoomData = async function (data) {
     });
 };
 
-export { dbConnect, deleteRoomData, addRoomData, getRoomData };
+export { dbConnect, addRoomData, getRoomData };

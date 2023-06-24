@@ -3,14 +3,13 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import { v1 as uuidv1 } from 'uuid';
+
 import {
     dbConnect,
-    deleteUserData,
     addUserData,
     getUserData,
 } from "./database/userFunctions.mjs";
 import {
-    deleteRoomData,
     addRoomData,
     getRoomData,
 } from "./database/roomFunction.mjs";
@@ -29,7 +28,7 @@ const io = new Server(server, {
 app.get("/", (req, res) => {
     res.send("running server well and good");
 });
-let thisU;
+
 io.on("connection", function (socket) {
     console.log(socket.id + " connected!"); 
     socket.on("sign-up-init", async (data) => {

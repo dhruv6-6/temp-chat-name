@@ -12,6 +12,6 @@ let schema = new mongoose.Schema({
     duos: Object,
     socketID: String
 
-}, { versionKey: false });
+});
 const userSchema = mongoose.model('user' , schema, 'user');
 export {userSchema};

@@ -82,7 +82,7 @@ const Chat = (props) => {
                 </div>
                 <p className="userLogName">{props.name}</p>
                 {addUserWindow ? (
-                    <button className="plusCircle">
+                    <button className="plusCircle  button">
                         <img
                             src={Plus}
                             className="plusIcon"
@@ -92,14 +92,14 @@ const Chat = (props) => {
                 ) : recievedRequestWindow ? (
                     <div>
                         <button
-                            className="acceptCircle"
+                            className="acceptCircle button"
                             onClick={(e) => {
                                 acceptRequest(props.name);
                             }}
                         >
                             <img src={accept} className="acceptIcon"></img>
                         </button>
-                        <button className="rejectCircle">
+                        <button className="rejectCircle button">
                             <img src={reject} className="rejectIcon"></img>
                         </button>
                     </div>
@@ -181,29 +181,29 @@ const Chat = (props) => {
             <div className="sidebar">
                 <img src={logo} className="logo"></img>
                 <button
-                    className="sidebarButton"
+                    className="sidebarButton button"
                     onClick={() => {
                         changeToMainChatWindow();
                     }}
                 >
                     <img src={chat} className="sidebarImage"></img>
                 </button>
-                <button className="sidebarButton">
+                <button className="sidebarButton button">
                     <img src={user} className="sidebarImage"></img>
                 </button>
                 <button
-                    className="sidebarButton"
+                    className="sidebarButton button"
                     onClick={() => {
                         userRequestPopupWindow();
                     }}
                 >
                     <img src={adduser} className="sidebarImage"></img>
                 </button>
-                <button className="sidebarButton">
+                <button className="sidebarButton button">
                     <img src={callhistory} className="sidebarImage"></img>
                 </button>
                 <button
-                    className="sidebarButton"
+                    className="sidebarButton button"
                     onClick={() => {
                         userAddPopupWindow();
                     }}
@@ -212,14 +212,14 @@ const Chat = (props) => {
                 </button>
                 <div className="middleGap"></div>
                 <button
-                    className="sidebarButton logoutButton"
+                    className="sidebarButton logoutButton button"
                     onClick={() => {
                         window.location.reload();
                     }}
                 >
                     <img src={logout} className="sidebarImage"></img>
                 </button>
-                <button className="sidebarButton">
+                <button className="sidebarButton button">
                     <img src={settings} className="sidebarImage"></img>
                 </button>
             </div>
@@ -232,7 +232,7 @@ const Chat = (props) => {
                             onClick={() => {
                                 changeToMainChatWindow();
                             }}
-                            className="backButton"
+                            className="backButton button"
                         >
                             <img
                                 src={backbutton}
@@ -264,7 +264,7 @@ const Chat = (props) => {
                                 placeholder="Enter Group Name"
                             ></input>
                             <div className="usersToAdd"></div>
-                            <button className="mainCreateGroupButton">
+                            <button className="mainCreateGroupButton button">
                                 Create Group
                             </button>
                         </div>
@@ -297,7 +297,7 @@ const Chat = (props) => {
                                 onClick={() => {
                                     changeToRecievedRequestWindow();
                                 }}
-                                className="createGroupButton"
+                                className="createGroupButton button"
                             >
                                 Recieved Requests
                             </button>
@@ -305,7 +305,7 @@ const Chat = (props) => {
                                 onClick={() => {
                                     changeToSentRequestWindow();
                                 }}
-                                className="addUserButton"
+                                className="addUserButton button"
                             >
                                 Sent Requests
                             </button>
@@ -319,7 +319,7 @@ const Chat = (props) => {
                                 onClick={() => {
                                     changeToCreateGroupWindow();
                                 }}
-                                className="createGroupButton"
+                                className="createGroupButton button"
                             >
                                 Create Group
                             </button>
@@ -327,7 +327,7 @@ const Chat = (props) => {
                                 onClick={() => {
                                     changeToAddUserWindow();
                                 }}
-                                className="addUserButton"
+                                className="addUserButton button"
                             >
                                 Add User
                             </button>
@@ -339,10 +339,10 @@ const Chat = (props) => {
             </div>
             <div className="chatArea">
                 <div className="chatterInfo">
-                    <button className="videocallButton">
+                    <button className="videocallButton button">
                         <img src={videocall} className="userinfoImage"></img>
                     </button>
-                    <button className="callButton">
+                    <button className="callButton button">
                         <img src={call} className="userinfoImage"></img>
                     </button>
                 </div>
@@ -355,7 +355,7 @@ const Chat = (props) => {
                             className="messageInput"
                             placeholder="Type message"
                         ></input>
-                        <button className="sendButton">Send</button>
+                        <button className="sendButton button">Send</button>
                     </div>
                 </div>
             </div>

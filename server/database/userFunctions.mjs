@@ -17,21 +17,7 @@ const dbConnect = async function () {
             console.log("ERR:", err);
         });
 };
-const deleteUserData = async function (data) {
-    await userSchema.find({ username: data.username }).then((dbRes) => {
-        dbRes.forEach((e) => {
-            if (e.username == data.username) {
-                userSchema
-                    .deleteOne({ _id: e._id })
-                    .then((status) => {})
-                    .catch((err) => {});
-            }
-        });
-    });
-    return new Promise((resolve, reject) => {
-        resolve();
-    });
-};
+
 const addUserData = async function (data) {
     const options = { upsert: true, new: true };
   
@@ -62,4 +48,4 @@ const getUserData = async function (data) {
         else reject(Rerr);
     });
 };
-export { dbConnect, deleteUserData, addUserData, getUserData };
+export { dbConnect, addUserData, getUserData };
