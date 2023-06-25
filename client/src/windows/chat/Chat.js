@@ -84,7 +84,14 @@ const Chat = (props) => {
                             reciever: curChatName,
                             message: [encryptedMessage0, encryptedMessage1],
                         };
-                        SetchatHistory([...chatHistory , {time:messageData.time, sender:messageData.sender , message:data}]);
+                        SetchatHistory([
+                            ...chatHistory,
+                            {
+                                time: messageData.time,
+                                sender: messageData.sender,
+                                message: data,
+                            },
+                        ]);
                         console.log(messageData);
                         socket.emit("sending-message", messageData);
                     }
@@ -126,24 +133,26 @@ const Chat = (props) => {
                 })
             );
             SetchatHistory(newMessageList);
-            console.log("bhai mene ye kr diya" , newMessageList);
+            console.log("bhai mene ye kr diya", newMessageList);
         });
         socket.on("recieve-single-message", async (data) => {
-            console.log("dekh mujhe toh yahi mila" , chatHistory);
-            let newMessageList = [];
-            await Promise.all(
-                data.map(async (e) => {
-                    var ne = e;
-                    ne.time = new Date(ne.time);
-                    ne.message = await decrypt(
-                        curUserData.privateKey,
-                        e.message,
-                        0
-                    );
-                    newMessageList.push(ne);
-                })
-            );
-            SetchatHistory([...chatHistory, ...newMessageList]);
+            if (data[0].sender == curChatName) {
+                let newMessageList = [];
+                await Promise.all(
+                    data.map(async (e) => {
+                        var ne = e;
+                        ne.time = new Date(ne.time);
+                        ne.message = await decrypt(
+                            curUserData.privateKey,
+                            e.message,
+                            0
+                        );
+                        newMessageList.push(ne);
+                    })
+                );
+                SetchatHistory([...chatHistory, ...newMessageList]);
+            } else {
+            }
         });
         return () => {
             socket.off("recieve-recievedRequestList");
@@ -153,7 +162,7 @@ const Chat = (props) => {
             socket.off("recieve-chat-details");
             socket.off("recieve-single-message");
         };
-    }, [socket , chatHistory]);
+    }, [socket, chatHistory]);
 
     const UserInfo = (props) => {
         const index = props.name.codePointAt(0) - 97;
